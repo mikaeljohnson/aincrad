@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aincrad — Design Document</title>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --border: #1e1e2e;
+      --accent: #7c6af7;
+      --accent-dim: #4a4080;
+      --text: #e0e0f0;
+      --text-dim: #7070a0;
+      --text-muted: #3a3a5a;
+      --gold: #c9a84c;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Georgia', serif;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+      background: linear-gradient(180deg, #0d0d1a 0%, var(--bg) 100%);
+    }
+
+    header .eyebrow {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      font-weight: normal;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    header h1 span {
+      color: var(--gold);
+    }
+
+    header .subtitle {
+      color: var(--text-dim);
+      font-style: italic;
+      font-size: 1.1rem;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.8rem;
+      border: 1px solid var(--text-muted);
+      transition: all 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 3rem;
+      padding: 0.75rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    section {
+      margin-bottom: 3.5rem;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      font-weight: normal;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h2 .section-num {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-right: 0.75rem;
+      letter-spacing: 0.1em;
+    }
+
+    p {
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .placeholder {
+      color: var(--text-muted);
+      font-style: italic;
+      font-size: 0.95rem;
+      padding: 1.5rem;
+      border: 1px dashed var(--text-muted);
+      text-align: center;
+    }
+
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .pillar {
+      padding: 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--accent-dim);
+    }
+
+    .pillar h3 {
+      font-size: 0.9rem;
+      font-weight: normal;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+      font-family: 'Courier New', monospace;
+    }
+
+    .pillar p {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      margin: 0;
+    }
+
+    .doc-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .doc-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s;
+    }
+
+    .doc-link:hover {
+      border-color: var(--accent);
+    }
+
+    .doc-link .doc-icon {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      width: 24px;
+      text-align: center;
+    }
+
+    .doc-link .doc-title {
+      flex: 1;
+      font-size: 0.95rem;
+    }
+
+    .doc-link .doc-status {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Living Design Document — v0.1</div>
+  <h1><span>⚔</span> Aincrad</h1>
+  <div class="subtitle">A Minecraft world built on consequence, community, and the will to ascend.</div>
+</header>
+
+<nav>
+  <a href="index.html">Overview</a>
+  <a href="vision.html">Vision</a>
+  <a href="world.html">World Design</a>
+  <a href="systems.html">Systems</a>
+  <a href="progression.html">Progression</a>
+  <a href="combat.html">Combat</a>
+  <a href="economy.html">Economy</a>
+  <a href="lore.html">Lore</a>
+</nav>
+
+<main>
+
+  <div class="status-bar">
+    <div class="status-dot"></div>
+    <span>DESIGN PHASE — Active development. All documents subject to revision.</span>
+  </div>
+
+  <section>
+    <h2><span class="section-num">00</span>What Is This</h2>
+    <p>
+      Aincrad is a Minecraft multiplayer server built to realize a singular vision: a world with genuine stakes, persistent consequence, emergent politics, and a community that fights — and builds — for something real.
+    </p>
+    <p>
+      Inspired by the in-game world of Sword Art Online and the decade-long tradition of the Civ genre (Civcraft, CivClassic, CivMC), Aincrad is not a theme park. It is a living world. The players will make it what it becomes.
+    </p>
+    <p>
+      This document is the blueprint. It will evolve as the vision sharpens.
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="section-num">01</span>Core Pillars</h2>
+    <div class="pillars">
+      <div class="pillar">
+        <h3>Consequence</h3>
+        <p>Death means something. Territory means something. Betrayal means something.</p>
+      </div>
+      <div class="pillar">
+        <h3>Ascent</h3>
+        <p>A world of floors. Progress is earned, not given. The summit is the goal.</p>
+      </div>
+      <div class="pillar">
+        <h3>Community</h3>
+        <p>No one clears Aincrad alone. Guilds, alliances, and rivalries drive the story.</p>
+      </div>
+      <div class="pillar">
+        <h3>Depth</h3>
+        <p>Economy, politics, espionage, war. Systems that reward mastery and punish carelessness.</p>
+      </div>
+      <div class="pillar">
+        <h3>Permanence</h3>
+        <p>What you build stays. What you lose stays lost. History accumulates.</p>
+      </div>
+      <div class="pillar">
+        <h3>Emergence</h3>
+        <p>The best stories won't be scripted. They'll happen because the world made them possible.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="section-num">02</span>Design Documents</h2>
+    <div class="doc-links">
+      <a class="doc-link" href="vision.html">
+        <span class="doc-icon">▸</span>
+        <span class="doc-title">Vision Statement</span>
+        <span class="doc-status">Draft</span>
+      </a>
+      <a class="doc-link" href="world.html">
+        <span class="doc-icon">▸</span>
+        <span class="doc-title">World Design — Floor Structure & Geography</span>
+        <span class="doc-status">Pending</span>
+      </a>
+      <a class="doc-link" href="systems.html">
+        <span class="doc-icon">▸</span>
+        <span class="doc-title">Core Systems Overview</span>
+        <span class="doc-status">Pending</span>
+      </a>
+      <a class="doc-link" href="progression.html">
+        <span class="doc-icon">▸</span>
+        <span class="doc-title">Progression & Skill Systems</span>
+        <span class="doc-status">Pending</span>
+      </a>
+      <a class="doc-link" href="combat.html">
+        <span class="doc-icon">▸</span>
+        <span class="doc-title">Combat Philosophy & PvP</span>
+        <span class="doc-status">Pending</span>
+      </a>
+      <a class="doc-link" href="economy.html">
+        <span class="doc-icon">▸</span>
+        <span class="doc-title">Economy & Crafting</span>
+        <span class="doc-status">Pending</span>
+      </a>
+      <a class="doc-link" href="lore.html">
+        <span class="doc-icon">▸</span>
+        <span class="doc-title">Lore & World Canon</span>
+        <span class="doc-status">Pending</span>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  AINCRAD PROJECT &nbsp;|&nbsp; DESIGN DOCUMENT &nbsp;|&nbsp; ARCHITECT: KAYABA
+</footer>
+
+</body>
+</html>
