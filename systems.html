@@ -84,10 +84,10 @@
     <ol>
       <li><a href="#philosophy">Systems Philosophy</a></li>
       <li><a href="#citadel">Citadel — Block Reinforcement</a></li>
-      <li><a href="#groups">Groups & Guilds</a></li>
-      <li><a href="#bastions">Bastions — Territory Anchors</a></li>
-      <li><a href="#snitches">Ward Crystals — Surveillance</a></li>
-      <li><a href="#pearl">Soul Binding — The Consequence System</a></li>
+      <li><a href="#groups">Namelayer — Groups & Guilds</a></li>
+      <li><a href="#bastions">Bastions — Territory</a></li>
+      <li><a href="#snitches">JukeAlert — Surveillance</a></li>
+      <li><a href="#pearl">Prison Pearl — The Consequence System</a></li>
       <li><a href="#karma">The Karma System</a></li>
       <li><a href="#admin">Admin Philosophy</a></li>
     </ol>
@@ -100,38 +100,38 @@
 
   <p>Every system in Aincrad should answer the question: <strong>what kind of player behavior does this make possible?</strong> Not just what it technically does — but what stories it enables. A system that creates no interesting player choices isn't worth building.</p>
 
-  <p>We draw directly from the Civ playbook here, adapting each mechanic for the Aincrad context. The names change, the aesthetics change, but the core logic is proven. A decade of Civ servers has demonstrated what these mechanics do to communities. We inherit that knowledge.</p>
+  <p>We draw directly from the Civ playbook here. The plugin names, the mechanics, the logic — all proven over a decade of Civ servers. We configure and tune them for Aincrad's context, but we don't reinvent what already works.</p>
 
   <div class="system-grid">
     <div class="system-card">
-      <h4>Citadel → Iron Binding</h4>
+      <h4>Citadel</h4>
       <p>Block reinforcement. The foundation of territory and property rights.</p>
     </div>
     <div class="system-card">
-      <h4>Namelayer → The Covenant System</h4>
+      <h4>Namelayer</h4>
       <p>Group permissions and membership management. The social fabric.</p>
     </div>
     <div class="system-card">
-      <h4>Bastions → Warding Anchors</h4>
+      <h4>Bastions</h4>
       <p>Territory protection. Defines where a guild's power begins and ends.</p>
     </div>
     <div class="system-card">
-      <h4>JukeAlert → Ward Crystals</h4>
+      <h4>JukeAlert</h4>
       <p>Surveillance. Intelligence and counter-intelligence.</p>
     </div>
     <div class="system-card">
-      <h4>Prison Pearl → Soul Binding</h4>
+      <h4>Prison Pearl</h4>
       <p>Player capture. The consequence that makes conflict matter.</p>
     </div>
     <div class="system-card">
-      <h4>Karma System → Alignment</h4>
+      <h4>Karma System</h4>
       <p>Player reputation. The social cost of violence and betrayal.</p>
     </div>
   </div>
 
-  <h2 id="citadel">Iron Binding — Block Reinforcement</h2>
+  <h2 id="citadel">Citadel — Block Reinforcement</h2>
 
-  <p>Iron Binding is the system that gives players <strong>real ownership over constructed space</strong>. Without it, anything you build can be destroyed in minutes. With it, your walls, your vault, your home — they have genuine durability that makes them worth defending and worth attacking.</p>
+  <p>Citadel is the system that gives players <strong>real ownership over constructed space</strong>. Without it, anything you build can be destroyed in minutes. With it, your walls, your vault, your home — they have genuine durability that makes them worth defending and worth attacking.</p>
 
   <h3>How It Works</h3>
   <p>When a player right-clicks a block while holding a reinforcement material, that block becomes <strong>bound</strong> — it gains additional hit points beyond its base Minecraft durability. Breaking a bound block requires multiple interactions, each consuming one "break attempt." When the break count is exhausted, the block breaks normally.</p>
@@ -176,7 +176,7 @@
   </table>
 
   <h3>Group Binding</h3>
-  <p>Reinforced blocks can be bound to a <strong>Covenant group</strong> (see Groups & Guilds). Only members of that group can interact with group-bound blocks normally. Non-members must break through the reinforcement. This is the foundation of access control — your vault door is bound to your inner circle, not the whole guild.</p>
+  <p>Reinforced blocks can be bound to a <strong>Namelayer group</strong> (see Groups & Guilds). Only members of that group can interact with group-bound blocks normally. Non-members must break through the reinforcement. This is the foundation of access control — your vault door is bound to your inner circle, not the whole guild.</p>
 
   <h3>Acid Blocks</h3>
   <p>Certain building materials do <em>not</em> hold reinforcement. Natural blocks (dirt, sand, gravel) cannot be reinforced — only worked materials (stone, wood, iron blocks, etc.). This prevents the exploit of reinforcing cheap filler material to create impenetrable walls at low cost. Building defensible structures requires actual crafted materials.</p>
@@ -188,19 +188,19 @@
   <h3>Decay</h3>
   <p>Reinforcement on blocks <strong>decays slowly over time</strong> when the owning group is inactive. This prevents permanently abandoned fortresses from being unraidable. If a guild dissolves and its members leave, their reinforced territory will eventually return to accessible space. The decay rate is slow — weeks, not days — so active guilds never need to worry about it.</p>
 
-  <h2 id="groups">The Covenant System — Groups & Guilds</h2>
+  <h2 id="groups">Namelayer — Groups & Guilds</h2>
 
-  <p>A Covenant is Aincrad's term for a named group. Every property right, territory claim, and collective action in the game flows through Covenants. You cannot meaningfully hold territory, run a guild hall, or coordinate defense without one.</p>
+  <p>Namelayer is the group management system. Every property right, territory claim, and collective action in the game flows through Namelayer groups. You cannot meaningfully hold territory, run a guild hall, or coordinate defense without one.</p>
 
-  <h3>Creating a Covenant</h3>
+  <h3>Creating a Group</h3>
   <ul>
     <li>Costs <strong>500 Col</strong> and a <strong>Charter Stone</strong> (craftable item) to establish</li>
     <li>Requires a minimum of <strong>3 founding members</strong></li>
-    <li>Must be registered at a Covenant Registry (located in each main town)</li>
+    <li>Must be registered at a Guild Registry (located in each main town)</li>
     <li>Name is permanent and unique — choose carefully</li>
   </ul>
 
-  <h3>Covenant Ranks</h3>
+  <h3>Group Ranks</h3>
   <table class="mat-table">
     <thead>
       <tr><th>Rank</th><th>Permissions</th></tr>
@@ -208,7 +208,7 @@
     <tbody>
       <tr>
         <td>Founder</td>
-        <td>Full control. Dissolve covenant, promote/demote all ranks, access all group-bound blocks.</td>
+        <td>Full control. Dissolve group, promote/demote all ranks, access all group-bound blocks.</td>
       </tr>
       <tr>
         <td>Officer</td>
@@ -225,96 +225,80 @@
     </tbody>
   </table>
 
-  <h3>Guild Covenants vs. Nation Covenants</h3>
-  <p>Covenants are flexible. A small adventuring party might form a Covenant to share a safehouse. A large organized guild is a Covenant. A player-run nation might be organized as a collection of Covenants with formal relationships between them — an inner Covenant for leadership decisions, outer Covenants for districts or allied groups.</p>
+  <h3>Guild Groups vs. Nation Groups</h3>
+  <p>Namelayer groups are flexible. A small adventuring party might form a group to share a safehouse. A large organized guild is a group. A player-run nation might be organized as a collection of nested groups — an inner group for leadership decisions, outer groups for districts or allied factions.</p>
 
-  <p>This nested structure mirrors how real Civ nations organized themselves — the Senate of Mount Augusta had different access than its citizen population. Aincrad's system supports this organically.</p>
+  <p>This nested structure mirrors how real Civ nations organized themselves — the Senate of Mount Augusta had different access than its citizen population. Namelayer supports this organically.</p>
 
-  <h3>Covenant Reputation</h3>
-  <p>Covenants accumulate <strong>Reputation</strong> over time based on their members' actions. High reputation Covenants get preferential treatment from the main town NPC traders. Low reputation (earned through murder, raiding, or broken contracts) results in NPC hostility. This creates a social cost for purely predatory playstyles at the organized level.</p>
+  <h3>Group Reputation</h3>
+  <p>Groups accumulate <strong>Reputation</strong> over time based on their members' actions. High reputation groups get preferential treatment from main town NPC traders. Low reputation (earned through murder, raiding, or broken contracts) results in NPC hostility. This creates a social cost for purely predatory playstyles at the organized level.</p>
 
-  <h2 id="bastions">Warding Anchors — Territory</h2>
+  <h2 id="bastions">Bastions — Territory</h2>
 
-  <p>Warding Anchors are placeable structures that <strong>protect a region of territory</strong> from unauthorized reinforcement. Without them, anyone can walk into your territory and start reinforcing blocks to their own group, slowly claiming your land from within.</p>
+  <p>Bastions are placeable structures that <strong>protect a region of territory</strong> from unauthorized reinforcement. Without them, anyone can walk into your territory and start reinforcing blocks to their own group, slowly claiming your land from within.</p>
 
   <h3>How They Work</h3>
-  <p>A Warding Anchor placed at a location projects a <strong>protection field</strong> in a configurable radius. Within this field, only members of the Anchor's owning Covenant can reinforce blocks. Non-members who try to reinforce blocks within the field are <strong>denied</strong> and receive a brief slowness effect as the ward pushes back.</p>
+  <p>A Bastion placed at a location projects a <strong>protection field</strong> in a configurable radius. Within this field, only members of the Bastion's owning group can reinforce blocks. Non-members who try to reinforce blocks within the field are <strong>denied</strong> and receive a brief slowness effect as the bastion pushes back.</p>
 
   <h3>Crafting and Cost</h3>
-  <p>Warding Anchors are expensive by design. They should represent a meaningful investment — not something spammed everywhere, but something placed deliberately around valued territory.</p>
+  <p>Bastions are expensive by design. They should represent a meaningful investment — not something spammed everywhere, but something placed deliberately around valued territory.</p>
   <ul>
     <li>Base materials: Iron Blocks, Redstone, Quartz, Lapis (crafted recipe)</li>
     <li>Activation cost: 100 XP levels (the Civ genre's use of XP as currency)</li>
-    <li>Monthly upkeep: 25 XP levels per anchor — inactive guilds lose their wards</li>
-    <li>Each anchor protects a radius of 64 blocks by default</li>
+    <li>Monthly upkeep: 25 XP levels per bastion — inactive guilds lose their territory protection</li>
+    <li>Each bastion protects a radius of 64 blocks by default</li>
   </ul>
 
-  <h3>Raiding Anchors</h3>
-  <p>Anchors themselves can be attacked and destroyed. They are Iron Binding-reinforced at placement (equivalent to diamond tier). Destroying an enemy's Warding Anchor is a major military objective — it opens their territory to counter-claim. Anchor raids are some of the most significant events in a server's history.</p>
+  <h3>Raiding Bastions</h3>
+  <p>Bastions themselves can be attacked and destroyed. They are Citadel-reinforced at placement (equivalent to diamond tier). Destroying an enemy's Bastion is a major military objective — it opens their territory to counter-claim. Bastion raids are some of the most significant events in a server's history.</p>
 
   <div class="callout danger">
-    <p><strong>Strategic importance:</strong> In Civcraft, vault raids and bastion destruction were the central military objectives of most wars. The same will be true here. Protect your anchors. Know where your enemies' anchors are.</p>
+    <p><strong>Strategic importance:</strong> In Civcraft, vault raids and bastion destruction were the central military objectives of most wars. The same will be true here. Protect your bastions. Know where your enemies' bastions are.</p>
   </div>
 
-  <h2 id="snitches">Ward Crystals — Surveillance</h2>
+  <h2 id="snitches">JukeAlert — Surveillance</h2>
 
-  <p>Ward Crystals are placeable items that <strong>log player movement</strong>. They are invisible to players who are not members of the owning Covenant, but visible to members. When a non-member player enters the crystal's detection radius, a notification is sent to all online members of the owning Covenant.</p>
+  <p>JukeAlert snitches are placeable items that <strong>log player movement</strong>. They are invisible to players who are not members of the owning group, but visible to members. When a non-member enters the snitch's detection radius, a notification is sent to all online group members.</p>
 
   <h3>Why This Matters</h3>
-  <p>In Civcraft, JukeAlert snitches were the foundation of intelligence networks. Serious players surrounded their territory in overlapping snitch coverage. They knew who had been near their vaults. They could map enemy movement patterns. Spies were caught. Raids were anticipated. Counter-intelligence became a meta-game.</p>
+  <p>Snitches were the foundation of intelligence networks in Civcraft. Serious players surrounded their territory in overlapping snitch coverage. They knew who had been near their vaults. They could map enemy movement patterns. Spies were caught. Raids were anticipated. Counter-intelligence became a meta-game.</p>
 
-  <p>Ward Crystals enable all of this. The player who invests in a good surveillance network has a massive advantage in information warfare. The player who ignores surveillance gets blindsided.</p>
+  <p>The same applies here. The player who invests in a good snitch network has a massive advantage in information warfare. The player who ignores it gets blindsided.</p>
 
-  <h3>Detection and Counterplay</h3>
+  <h3>Detection</h3>
   <ul>
-    <li>Ward Crystals detect players within a <strong>5-block radius</strong> by default</li>
+    <li>Snitches detect players within a <strong>5-block radius</strong> by default</li>
     <li>Detection logs include: player name, coordinates, timestamp</li>
-    <li>Notifications are sent to online Covenant members immediately</li>
-    <li>Crystal locations can be discovered by enemy players who examine blocks carefully — they glow faintly under certain conditions</li>
-    <li><strong>Silence Powder</strong> (craftable alchemical item) can temporarily disable a crystal without triggering it — the counter-intelligence tool</li>
+    <li>Notifications are sent to online group members immediately</li>
+    <li>Breaking an enemy snitch is possible — but triggers an alert if the owning group is online</li>
   </ul>
 
-  <h3>Placing Crystals</h3>
+  <h3>Placing Snitches</h3>
   <ul>
-    <li>Crafted from: quartz, redstone, lapis</li>
-    <li>Modest cost — surveillance should be accessible, not luxury</li>
-    <li>Must be assigned to a Covenant on placement</li>
+    <li>Standard Minecraft jukebox — accessible, not luxury</li>
+    <li>Must be assigned to a Namelayer group on placement</li>
     <li>Can be placed on most solid surfaces</li>
-    <li>Breaking an enemy crystal is possible — but triggers an alert if the owning Covenant is online</li>
   </ul>
 
-  <h2 id="pearl">Soul Binding — The Consequence System</h2>
+  <h2 id="pearl">Prison Pearl — The Consequence System</h2>
 
-  <p>Soul Binding is the system that makes conflict in Aincrad carry <strong>real weight</strong>. It is the analog to Civcraft's Prison Pearl — the mechanism by which a player can be captured, held, and used as a bargaining chip.</p>
+  <p>Prison Pearl is the system that makes conflict in Aincrad carry <strong>real weight</strong>. It is the mechanism by which a player can be captured, held, and used as a bargaining chip.</p>
 
   <h3>The Mechanics</h3>
-  <p>When a player is killed by another player who possesses a <strong>Soul Shard</strong> (a rare item — see below), the killer can choose to <em>bind</em> the defeated player rather than let them respawn normally. The bound player is exiled to the <strong>Void Plane</strong> — a holding dimension where they can move around but cannot access any normal game systems. They are effectively removed from the world.</p>
+  <p>When a player is killed by another player holding an <strong>ender pearl</strong>, the killer can pearl the defeated player instead of letting them respawn. The pearled player is exiled to a holding dimension — effectively removed from the world until released.</p>
 
-  <p>The Soul Shard used to bind the player now contains their soul — it appears as a unique item with the bound player's name. The binding player (or their Covenant) holds it.</p>
+  <p>The pearl containing the player is a physical item that can be stored in a vault, traded, or destroyed. It is the ultimate leverage.</p>
 
   <h3>Release Conditions</h3>
   <ul>
-    <li><strong>Negotiated release:</strong> The holding party releases the shard. The bound player respawns normally. This is the primary mechanism — most bindings end through diplomacy, ransom, or political resolution.</li>
-    <li><strong>Physical rescue:</strong> If a player's Covenant can physically retrieve the shard (by raiding the vault where it's stored) and break it, the bound player is freed.</li>
-    <li><strong>Permanent exile:</strong> If a shard is destroyed by the holding party, the bound player is freed but with significant penalties (major stat debuff, item loss). This is the nuclear option — typically only used against declared enemies with no diplomatic avenue.</li>
-    <li><strong>Server staff release:</strong> In cases of genuine abuse or rule violations, staff can release a binding. This should be extremely rare.</li>
+    <li><strong>Negotiated release:</strong> The holding party releases the pearl. The pearled player respawns normally. This is the primary mechanism — most pearlings end through diplomacy, ransom, or political resolution.</li>
+    <li><strong>Physical rescue:</strong> If a player's allies can physically retrieve the pearl (by raiding the vault where it's stored) and break it, the pearled player is freed.</li>
+    <li><strong>Destruction:</strong> If the pearl is destroyed by the holding party, the pearled player is freed but with significant penalties. The nuclear option.</li>
   </ul>
-
-  <h3>Soul Shard Availability</h3>
-  <p>Soul Shards must be <strong>rare</strong>. If anyone can bind anyone, the system becomes oppressive. Soul Shards drop only from:</p>
-  <ul>
-    <li>Floor Boss loot tables (guaranteed drop, 1 per clear)</li>
-    <li>Certain high-tier Field Boss drops (rare, ~5% chance)</li>
-    <li>Deep Labyrinth chests (uncommon)</li>
-  </ul>
-  <p>This scarcity ensures that Soul Binding is used deliberately, not casually. A guild that has bound three players has spent real resources to do so.</p>
 
   <div class="callout">
-    <p><strong>Why Soul Binding matters:</strong> In Civcraft, Prison Pearls transformed wars. Killing enemies was satisfying but temporary — they respawned. <em>Pearling</em> an enemy leader meant they were gone until you chose otherwise. Entire wars ended because one side ran out of pearls, or one key player was pearled at a critical moment. This is the mechanic that elevates Aincrad above any normal PvP server. Conflict has permanent consequences.</p>
+    <p><strong>Why Prison Pearl matters:</strong> Killing enemies is temporary — they respawn. Pearling an enemy leader means they are gone until you choose otherwise. Entire wars in Civcraft ended because one side ran out of pearls, or one key player was pearled at a critical moment. This is the mechanic that elevates Aincrad above any normal PvP server. Conflict has permanent consequences.</p>
   </div>
-
-  <h3>The Void Plane</h3>
-  <p>The Void Plane is a purpose-built holding dimension. It should feel like <em>somewhere</em> — not just an empty void, but a specific place with atmosphere. Players held there should experience it as confinement, not just a loading screen. Other players can communicate with bound players via a special item (the <strong>Soul Echo</strong>, allowing chat messages to the Void Plane). This enables ransom negotiations, taunting, or simply keeping in touch with captured allies while the diplomats work.</p>
 
   <h2 id="karma">The Karma System — Alignment</h2>
 
@@ -382,7 +366,7 @@
     <p><strong>The temptation to intervene:</strong> Players will beg for admin intervention when things go wrong. A vault gets raided. A trusted officer betrays the guild. A new player gets targeted relentlessly. The admin must resist. The moment admins start reversing consequences, the consequence systems stop meaning anything, and the server dies slowly. The hardness of the world is the point.</p>
   </div>
 
-  <p>The one exception: <strong>Soul Binding abuse</strong>. If a player is being held in the Void Plane in a genuinely abusive manner (holding without any diplomatic engagement, no stated demands, purely to harass), admins may intervene after a documented period and process. This is the safety valve that prevents the system from being weaponized purely for harassment rather than strategic gain.</p>
+  <p>Pearl use is player business. If you get pearled, your allies rescue you or you negotiate your release. The admin team does not intervene in pearling situations — that is the spirit of this server.</p>
 
 </main>
 <footer>AINCRAD PROJECT &nbsp;|&nbsp; CORE SYSTEMS &nbsp;|&nbsp; ARCHITECT: KAYABA</footer>
