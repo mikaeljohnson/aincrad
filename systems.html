@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Core Systems — Aincrad</title>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --surface2: #161622;
+      --border: #1e1e2e;
+      --accent: #7c6af7;
+      --accent-dim: #4a4080;
+      --text: #e0e0f0;
+      --text-dim: #7070a0;
+      --text-muted: #3a3a5a;
+      --gold: #c9a84c;
+      --danger: #c45c5c;
+      --safe: #5ca87c;
+      --warn: #c4a05c;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Georgia', serif; line-height: 1.75; }
+    header { border-bottom: 1px solid var(--border); padding: 2rem; text-align: center; background: linear-gradient(180deg, #0d0d1a 0%, var(--bg) 100%); }
+    header .eyebrow { font-family: 'Courier New', monospace; font-size: 0.75rem; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.5rem; }
+    header h1 { font-size: 2.2rem; font-weight: normal; color: var(--gold); letter-spacing: 0.05em; }
+    header .desc { color: var(--text-dim); font-style: italic; margin-top: 0.5rem; }
+    nav { display: flex; justify-content: center; gap: 0.5rem; padding: 1rem 2rem; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+    nav a { color: var(--text-dim); text-decoration: none; font-family: 'Courier New', monospace; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 0.8rem; border: 1px solid var(--text-muted); transition: all 0.2s; }
+    nav a:hover, nav a.active { color: var(--accent); border-color: var(--accent); }
+    main { max-width: 900px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+    h2 { font-size: 1.5rem; font-weight: normal; color: var(--gold); margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }
+    h3 { font-size: 1.1rem; font-weight: normal; color: var(--accent); margin: 2rem 0 0.75rem; }
+    h4 { font-size: 0.9rem; font-weight: bold; color: var(--text); margin: 1.25rem 0 0.5rem; font-family: 'Courier New', monospace; letter-spacing: 0.05em; text-transform: uppercase; }
+    p { margin-bottom: 1rem; color: var(--text); font-size: 0.98rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; color: var(--text); font-size: 0.95rem; }
+    strong { color: var(--gold); font-weight: normal; }
+    em { color: var(--text-dim); }
+    .callout { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+    .callout.danger { border-left-color: var(--danger); }
+    .callout.safe { border-left-color: var(--safe); }
+    .callout.warn { border-left-color: var(--warn); }
+    .callout p { margin: 0; font-size: 0.92rem; color: var(--text-dim); }
+    .callout strong { color: var(--text); }
+    .system-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .system-card { background: var(--surface); border: 1px solid var(--border); border-top: 2px solid var(--accent-dim); padding: 1.25rem; }
+    .system-card h4 { margin: 0 0 0.5rem; text-transform: none; font-family: 'Georgia', serif; font-size: 1rem; color: var(--gold); letter-spacing: 0; }
+    .system-card p { font-size: 0.88rem; color: var(--text-dim); margin: 0; }
+    .mat-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+    .mat-table th { text-align: left; padding: 0.6rem 0.8rem; background: var(--surface2); color: var(--text-dim); font-family: 'Courier New', monospace; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; border-bottom: 1px solid var(--border); font-weight: normal; }
+    .mat-table td { padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .mat-table tr:last-child td { border-bottom: none; }
+    .mat-table td:first-child { color: var(--gold); font-family: 'Courier New', monospace; }
+    .toc { background: var(--surface); border: 1px solid var(--border); padding: 1.25rem 1.5rem; margin-bottom: 3rem; }
+    .toc h4 { margin: 0 0 0.75rem; color: var(--text-dim); }
+    .toc a { color: var(--accent); text-decoration: none; font-size: 0.9rem; }
+    .toc li { margin-bottom: 0.3rem; }
+    .section-intro { color: var(--text-dim); font-style: italic; font-size: 1rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px dashed var(--border); }
+    footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-family: 'Courier New', monospace; font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.1em; margin-top: 4rem; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Aincrad — Design Document</div>
+  <h1>Core Systems</h1>
+  <div class="desc">The mechanics that give the world permanence, consequence, and depth.</div>
+</header>
+<nav>
+  <a href="index.html">Overview</a>
+  <a href="vision.html">Vision</a>
+  <a href="world.html">World Design</a>
+  <a href="systems.html" class="active">Systems</a>
+  <a href="progression.html">Progression</a>
+  <a href="combat.html">Combat</a>
+  <a href="economy.html">Economy</a>
+  <a href="lore.html">Lore</a>
+</nav>
+<main>
+
+  <div class="toc">
+    <h4>Contents</h4>
+    <ol>
+      <li><a href="#philosophy">Systems Philosophy</a></li>
+      <li><a href="#citadel">Citadel — Block Reinforcement</a></li>
+      <li><a href="#groups">Groups & Guilds</a></li>
+      <li><a href="#bastions">Bastions — Territory Anchors</a></li>
+      <li><a href="#snitches">Ward Crystals — Surveillance</a></li>
+      <li><a href="#pearl">Soul Binding — The Consequence System</a></li>
+      <li><a href="#karma">The Karma System</a></li>
+      <li><a href="#admin">Admin Philosophy</a></li>
+    </ol>
+  </div>
+
+  <h2 id="philosophy">Systems Philosophy</h2>
+  <p class="section-intro">Systems create the conditions for stories. The best Civ mechanics weren't interesting in themselves — they were interesting because of what they made possible between players.</p>
+
+  <p>The Civ genre's genius was mechanical depth that created social complexity. Citadel didn't just protect blocks — it created the concept of <em>territory</em>. Prison Pearl didn't just remove players — it created <em>diplomacy</em>, because now there was a bargaining chip. Snitches didn't just log movement — they created <em>intelligence networks</em>, spies, counter-intelligence.</p>
+
+  <p>Every system in Aincrad should answer the question: <strong>what kind of player behavior does this make possible?</strong> Not just what it technically does — but what stories it enables. A system that creates no interesting player choices isn't worth building.</p>
+
+  <p>We draw directly from the Civ playbook here, adapting each mechanic for the Aincrad context. The names change, the aesthetics change, but the core logic is proven. A decade of Civ servers has demonstrated what these mechanics do to communities. We inherit that knowledge.</p>
+
+  <div class="system-grid">
+    <div class="system-card">
+      <h4>Citadel → Iron Binding</h4>
+      <p>Block reinforcement. The foundation of territory and property rights.</p>
+    </div>
+    <div class="system-card">
+      <h4>Namelayer → The Covenant System</h4>
+      <p>Group permissions and membership management. The social fabric.</p>
+    </div>
+    <div class="system-card">
+      <h4>Bastions → Warding Anchors</h4>
+      <p>Territory protection. Defines where a guild's power begins and ends.</p>
+    </div>
+    <div class="system-card">
+      <h4>JukeAlert → Ward Crystals</h4>
+      <p>Surveillance. Intelligence and counter-intelligence.</p>
+    </div>
+    <div class="system-card">
+      <h4>Prison Pearl → Soul Binding</h4>
+      <p>Player capture. The consequence that makes conflict matter.</p>
+    </div>
+    <div class="system-card">
+      <h4>Karma System → Alignment</h4>
+      <p>Player reputation. The social cost of violence and betrayal.</p>
+    </div>
+  </div>
+
+  <h2 id="citadel">Iron Binding — Block Reinforcement</h2>
+
+  <p>Iron Binding is the system that gives players <strong>real ownership over constructed space</strong>. Without it, anything you build can be destroyed in minutes. With it, your walls, your vault, your home — they have genuine durability that makes them worth defending and worth attacking.</p>
+
+  <h3>How It Works</h3>
+  <p>When a player right-clicks a block while holding a reinforcement material, that block becomes <strong>bound</strong> — it gains additional hit points beyond its base Minecraft durability. Breaking a bound block requires multiple interactions, each consuming one "break attempt." When the break count is exhausted, the block breaks normally.</p>
+
+  <p>Reinforcement materials:</p>
+
+  <table class="mat-table">
+    <thead>
+      <tr>
+        <th>Material</th>
+        <th>Break Attempts</th>
+        <th>Source</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Stone</td>
+        <td>50</td>
+        <td>Common, all floors</td>
+        <td>Basic protection. Good for temporary structures and storage.</td>
+      </tr>
+      <tr>
+        <td>Iron Ingot</td>
+        <td>250</td>
+        <td>Mid-tier, Floors 1–5</td>
+        <td>Standard protection for permanent builds. Most homes and guild buildings.</td>
+      </tr>
+      <tr>
+        <td>Diamond</td>
+        <td>2000</td>
+        <td>Rare, Floors 4+</td>
+        <td>Vault-tier protection. Reserved for the most critical structures.</td>
+      </tr>
+      <tr>
+        <td>Void Steel</td>
+        <td>10000</td>
+        <td>Boss drops only</td>
+        <td>The highest tier. Effectively impregnable without sustained coordinated effort.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Group Binding</h3>
+  <p>Reinforced blocks can be bound to a <strong>Covenant group</strong> (see Groups & Guilds). Only members of that group can interact with group-bound blocks normally. Non-members must break through the reinforcement. This is the foundation of access control — your vault door is bound to your inner circle, not the whole guild.</p>
+
+  <h3>Acid Blocks</h3>
+  <p>Certain building materials do <em>not</em> hold reinforcement. Natural blocks (dirt, sand, gravel) cannot be reinforced — only worked materials (stone, wood, iron blocks, etc.). This prevents the exploit of reinforcing cheap filler material to create impenetrable walls at low cost. Building defensible structures requires actual crafted materials.</p>
+
+  <div class="callout warn">
+    <p><strong>Design Note:</strong> The reinforcement math matters enormously. Too cheap and nothing has consequence. Too expensive and new players can never protect anything. The tiers above are starting estimates — they will be tuned based on how the economy develops on the server.</p>
+  </div>
+
+  <h3>Decay</h3>
+  <p>Reinforcement on blocks <strong>decays slowly over time</strong> when the owning group is inactive. This prevents permanently abandoned fortresses from being unraidable. If a guild dissolves and its members leave, their reinforced territory will eventually return to accessible space. The decay rate is slow — weeks, not days — so active guilds never need to worry about it.</p>
+
+  <h2 id="groups">The Covenant System — Groups & Guilds</h2>
+
+  <p>A Covenant is Aincrad's term for a named group. Every property right, territory claim, and collective action in the game flows through Covenants. You cannot meaningfully hold territory, run a guild hall, or coordinate defense without one.</p>
+
+  <h3>Creating a Covenant</h3>
+  <ul>
+    <li>Costs <strong>500 Col</strong> and a <strong>Charter Stone</strong> (craftable item) to establish</li>
+    <li>Requires a minimum of <strong>3 founding members</strong></li>
+    <li>Must be registered at a Covenant Registry (located in each main town)</li>
+    <li>Name is permanent and unique — choose carefully</li>
+  </ul>
+
+  <h3>Covenant Ranks</h3>
+  <table class="mat-table">
+    <thead>
+      <tr><th>Rank</th><th>Permissions</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Founder</td>
+        <td>Full control. Dissolve covenant, promote/demote all ranks, access all group-bound blocks.</td>
+      </tr>
+      <tr>
+        <td>Officer</td>
+        <td>Invite/kick Members. Manage group-bound blocks. Cannot dissolve or change Founder.</td>
+      </tr>
+      <tr>
+        <td>Member</td>
+        <td>Access group-bound blocks. Cannot manage membership.</td>
+      </tr>
+      <tr>
+        <td>Initiate</td>
+        <td>Limited access. Probationary rank. Officers decide what an Initiate can access.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Guild Covenants vs. Nation Covenants</h3>
+  <p>Covenants are flexible. A small adventuring party might form a Covenant to share a safehouse. A large organized guild is a Covenant. A player-run nation might be organized as a collection of Covenants with formal relationships between them — an inner Covenant for leadership decisions, outer Covenants for districts or allied groups.</p>
+
+  <p>This nested structure mirrors how real Civ nations organized themselves — the Senate of Mount Augusta had different access than its citizen population. Aincrad's system supports this organically.</p>
+
+  <h3>Covenant Reputation</h3>
+  <p>Covenants accumulate <strong>Reputation</strong> over time based on their members' actions. High reputation Covenants get preferential treatment from the main town NPC traders. Low reputation (earned through murder, raiding, or broken contracts) results in NPC hostility. This creates a social cost for purely predatory playstyles at the organized level.</p>
+
+  <h2 id="bastions">Warding Anchors — Territory</h2>
+
+  <p>Warding Anchors are placeable structures that <strong>protect a region of territory</strong> from unauthorized reinforcement. Without them, anyone can walk into your territory and start reinforcing blocks to their own group, slowly claiming your land from within.</p>
+
+  <h3>How They Work</h3>
+  <p>A Warding Anchor placed at a location projects a <strong>protection field</strong> in a configurable radius. Within this field, only members of the Anchor's owning Covenant can reinforce blocks. Non-members who try to reinforce blocks within the field are <strong>denied</strong> and receive a brief slowness effect as the ward pushes back.</p>
+
+  <h3>Crafting and Cost</h3>
+  <p>Warding Anchors are expensive by design. They should represent a meaningful investment — not something spammed everywhere, but something placed deliberately around valued territory.</p>
+  <ul>
+    <li>Base materials: Iron Blocks, Redstone, Quartz, Lapis (crafted recipe)</li>
+    <li>Activation cost: 100 XP levels (the Civ genre's use of XP as currency)</li>
+    <li>Monthly upkeep: 25 XP levels per anchor — inactive guilds lose their wards</li>
+    <li>Each anchor protects a radius of 64 blocks by default</li>
+  </ul>
+
+  <h3>Raiding Anchors</h3>
+  <p>Anchors themselves can be attacked and destroyed. They are Iron Binding-reinforced at placement (equivalent to diamond tier). Destroying an enemy's Warding Anchor is a major military objective — it opens their territory to counter-claim. Anchor raids are some of the most significant events in a server's history.</p>
+
+  <div class="callout danger">
+    <p><strong>Strategic importance:</strong> In Civcraft, vault raids and bastion destruction were the central military objectives of most wars. The same will be true here. Protect your anchors. Know where your enemies' anchors are.</p>
+  </div>
+
+  <h2 id="snitches">Ward Crystals — Surveillance</h2>
+
+  <p>Ward Crystals are placeable items that <strong>log player movement</strong>. They are invisible to players who are not members of the owning Covenant, but visible to members. When a non-member player enters the crystal's detection radius, a notification is sent to all online members of the owning Covenant.</p>
+
+  <h3>Why This Matters</h3>
+  <p>In Civcraft, JukeAlert snitches were the foundation of intelligence networks. Serious players surrounded their territory in overlapping snitch coverage. They knew who had been near their vaults. They could map enemy movement patterns. Spies were caught. Raids were anticipated. Counter-intelligence became a meta-game.</p>
+
+  <p>Ward Crystals enable all of this. The player who invests in a good surveillance network has a massive advantage in information warfare. The player who ignores surveillance gets blindsided.</p>
+
+  <h3>Detection and Counterplay</h3>
+  <ul>
+    <li>Ward Crystals detect players within a <strong>5-block radius</strong> by default</li>
+    <li>Detection logs include: player name, coordinates, timestamp</li>
+    <li>Notifications are sent to online Covenant members immediately</li>
+    <li>Crystal locations can be discovered by enemy players who examine blocks carefully — they glow faintly under certain conditions</li>
+    <li><strong>Silence Powder</strong> (craftable alchemical item) can temporarily disable a crystal without triggering it — the counter-intelligence tool</li>
+  </ul>
+
+  <h3>Placing Crystals</h3>
+  <ul>
+    <li>Crafted from: quartz, redstone, lapis</li>
+    <li>Modest cost — surveillance should be accessible, not luxury</li>
+    <li>Must be assigned to a Covenant on placement</li>
+    <li>Can be placed on most solid surfaces</li>
+    <li>Breaking an enemy crystal is possible — but triggers an alert if the owning Covenant is online</li>
+  </ul>
+
+  <h2 id="pearl">Soul Binding — The Consequence System</h2>
+
+  <p>Soul Binding is the system that makes conflict in Aincrad carry <strong>real weight</strong>. It is the analog to Civcraft's Prison Pearl — the mechanism by which a player can be captured, held, and used as a bargaining chip.</p>
+
+  <h3>The Mechanics</h3>
+  <p>When a player is killed by another player who possesses a <strong>Soul Shard</strong> (a rare item — see below), the killer can choose to <em>bind</em> the defeated player rather than let them respawn normally. The bound player is exiled to the <strong>Void Plane</strong> — a holding dimension where they can move around but cannot access any normal game systems. They are effectively removed from the world.</p>
+
+  <p>The Soul Shard used to bind the player now contains their soul — it appears as a unique item with the bound player's name. The binding player (or their Covenant) holds it.</p>
+
+  <h3>Release Conditions</h3>
+  <ul>
+    <li><strong>Negotiated release:</strong> The holding party releases the shard. The bound player respawns normally. This is the primary mechanism — most bindings end through diplomacy, ransom, or political resolution.</li>
+    <li><strong>Physical rescue:</strong> If a player's Covenant can physically retrieve the shard (by raiding the vault where it's stored) and break it, the bound player is freed.</li>
+    <li><strong>Permanent exile:</strong> If a shard is destroyed by the holding party, the bound player is freed but with significant penalties (major stat debuff, item loss). This is the nuclear option — typically only used against declared enemies with no diplomatic avenue.</li>
+    <li><strong>Server staff release:</strong> In cases of genuine abuse or rule violations, staff can release a binding. This should be extremely rare.</li>
+  </ul>
+
+  <h3>Soul Shard Availability</h3>
+  <p>Soul Shards must be <strong>rare</strong>. If anyone can bind anyone, the system becomes oppressive. Soul Shards drop only from:</p>
+  <ul>
+    <li>Floor Boss loot tables (guaranteed drop, 1 per clear)</li>
+    <li>Certain high-tier Field Boss drops (rare, ~5% chance)</li>
+    <li>Deep Labyrinth chests (uncommon)</li>
+  </ul>
+  <p>This scarcity ensures that Soul Binding is used deliberately, not casually. A guild that has bound three players has spent real resources to do so.</p>
+
+  <div class="callout">
+    <p><strong>Why Soul Binding matters:</strong> In Civcraft, Prison Pearls transformed wars. Killing enemies was satisfying but temporary — they respawned. <em>Pearling</em> an enemy leader meant they were gone until you chose otherwise. Entire wars ended because one side ran out of pearls, or one key player was pearled at a critical moment. This is the mechanic that elevates Aincrad above any normal PvP server. Conflict has permanent consequences.</p>
+  </div>
+
+  <h3>The Void Plane</h3>
+  <p>The Void Plane is a purpose-built holding dimension. It should feel like <em>somewhere</em> — not just an empty void, but a specific place with atmosphere. Players held there should experience it as confinement, not just a loading screen. Other players can communicate with bound players via a special item (the <strong>Soul Echo</strong>, allowing chat messages to the Void Plane). This enables ransom negotiations, taunting, or simply keeping in touch with captured allies while the diplomats work.</p>
+
+  <h2 id="karma">The Karma System — Alignment</h2>
+
+  <p>The Karma system tracks a player's history of violence and assigns them a visible <strong>alignment</strong> that affects how the world perceives them. It is the social cost structure for aggression.</p>
+
+  <h3>The Three States</h3>
+
+  <table class="mat-table">
+    <thead>
+      <tr><th>State</th><th>Visual</th><th>How You Get Here</th><th>Implications</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Green (Lawful)</td>
+        <td>Green name tag</td>
+        <td>Default state. No recent unprovoked violence.</td>
+        <td>Full NPC shop access. Safe in most towns. Cannot be attacked in certain protected zones.</td>
+      </tr>
+      <tr>
+        <td>Orange (Outlaw)</td>
+        <td>Orange name tag</td>
+        <td>Attacked or killed a Green player without provocation. Declared wanted by a Covenant.</td>
+        <td>Some NPC hostility. Can be attacked by any Green player without karma penalty. Temporary — fades after ~3 days of no further offenses.</td>
+      </tr>
+      <tr>
+        <td>Red (Murderer)</td>
+        <td>Red name tag</td>
+        <td>Killed multiple Green players, or committed particularly heinous acts (vault raid during ceasefire, etc.).</td>
+        <td>Banned from main towns. NPC guards hostile. KOS for all bounty hunters. Permanent until player serves "justice" (negotiated, usually through Soul Binding release or public punishment).</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Declared War</h3>
+  <p>Two Covenants can formally declare war on each other. During a declared war, violence between members of opposing Covenants does not affect karma — war is a social license for conflict. Declarations are public, permanent in the Chronicle, and cannot be retracted unilaterally. Peace requires mutual agreement.</p>
+
+  <h3>Bounties</h3>
+  <p>Any player can place a bounty on an Orange or Red player by depositing Col into a bounty contract at the Covenant Registry. The bounty is publicly visible. Any player who kills the target and provides proof (screenshot + admin verification) claims the bounty. Bounty hunting is a legitimate player role.</p>
+
+  <h2 id="admin">Admin Philosophy</h2>
+
+  <p class="section-intro">The best thing an admin can do for a Civ server is stay out of it.</p>
+
+  <p>Civcraft's founding principle was minimal admin intervention. The rules were almost absurdly simple: no cheating, no doxxing, no real-life harassment. Everything else was player business. Wars, betrayals, thefts, griefing — if it happened in the game, it was the game. Admins did not adjudicate disputes between players, reverse griefing, or punish political acts however distasteful.</p>
+
+  <p>Aincrad inherits this philosophy. The admin team's role is:</p>
+  <ul>
+    <li>Maintain server stability and performance</li>
+    <li>Build and release new floor content</li>
+    <li>Handle technical exploits and cheating</li>
+    <li>Prevent real-world harm (doxxing, harassment)</li>
+    <li>Maintain the Chronicle (the permanent record of server history)</li>
+  </ul>
+
+  <p>Admins do <strong>not</strong>:</p>
+  <ul>
+    <li>Reverse legitimate raids, thefts, or conquests</li>
+    <li>Return items lost to PvP or bad luck</li>
+    <li>Mediate political disputes between players</li>
+    <li>Protect players from the consequences of the systems they chose to engage with</li>
+    <li>Spawn in items or resources</li>
+  </ul>
+
+  <div class="callout warn">
+    <p><strong>The temptation to intervene:</strong> Players will beg for admin intervention when things go wrong. A vault gets raided. A trusted officer betrays the guild. A new player gets targeted relentlessly. The admin must resist. The moment admins start reversing consequences, the consequence systems stop meaning anything, and the server dies slowly. The hardness of the world is the point.</p>
+  </div>
+
+  <p>The one exception: <strong>Soul Binding abuse</strong>. If a player is being held in the Void Plane in a genuinely abusive manner (holding without any diplomatic engagement, no stated demands, purely to harass), admins may intervene after a documented period and process. This is the safety valve that prevents the system from being weaponized purely for harassment rather than strategic gain.</p>
+
+</main>
+<footer>AINCRAD PROJECT &nbsp;|&nbsp; CORE SYSTEMS &nbsp;|&nbsp; ARCHITECT: KAYABA</footer>
+</body>
+</html>

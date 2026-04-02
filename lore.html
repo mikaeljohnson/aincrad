@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lore — Aincrad</title>
+  <style>
+    :root {
+      --bg: #0a0a0f; --surface: #111118; --surface2: #161622; --border: #1e1e2e;
+      --accent: #7c6af7; --accent-dim: #4a4080; --text: #e0e0f0; --text-dim: #7070a0;
+      --text-muted: #3a3a5a; --gold: #c9a84c; --danger: #c45c5c; --safe: #5ca87c; --warn: #c4a05c;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Georgia', serif; line-height: 1.75; }
+    header { border-bottom: 1px solid var(--border); padding: 2rem; text-align: center; background: linear-gradient(180deg, #0d0d1a 0%, var(--bg) 100%); }
+    header .eyebrow { font-family: 'Courier New', monospace; font-size: 0.75rem; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.5rem; }
+    header h1 { font-size: 2.2rem; font-weight: normal; color: var(--gold); }
+    header .desc { color: var(--text-dim); font-style: italic; margin-top: 0.5rem; }
+    nav { display: flex; justify-content: center; gap: 0.5rem; padding: 1rem 2rem; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+    nav a { color: var(--text-dim); text-decoration: none; font-family: 'Courier New', monospace; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 0.8rem; border: 1px solid var(--text-muted); transition: all 0.2s; }
+    nav a:hover, nav a.active { color: var(--accent); border-color: var(--accent); }
+    main { max-width: 900px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+    h2 { font-size: 1.5rem; font-weight: normal; color: var(--gold); margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }
+    h3 { font-size: 1.1rem; font-weight: normal; color: var(--accent); margin: 2rem 0 0.75rem; }
+    h4 { font-size: 0.9rem; font-weight: bold; color: var(--text); margin: 1.25rem 0 0.5rem; font-family: 'Courier New', monospace; letter-spacing: 0.05em; text-transform: uppercase; }
+    p { margin-bottom: 1rem; color: var(--text); font-size: 0.98rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; color: var(--text); font-size: 0.95rem; }
+    strong { color: var(--gold); font-weight: normal; }
+    em { color: var(--text-dim); font-style: italic; }
+    blockquote { border-left: 3px solid var(--accent-dim); margin: 1.5rem 0; padding: 0.75rem 1.5rem; background: var(--surface); }
+    blockquote p { color: var(--text-dim); font-style: italic; margin: 0; }
+    .callout { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+    .callout.warn { border-left-color: var(--warn); }
+    .callout p { margin: 0; font-size: 0.92rem; color: var(--text-dim); }
+    .callout strong { color: var(--text); }
+    .lore-fragment { background: var(--surface2); border: 1px solid var(--border); padding: 1.5rem; margin: 1.5rem 0; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.6; }
+    .lore-fragment .fragment-header { font-size: 0.7rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.75rem; }
+    .lore-fragment p { font-family: 'Courier New', monospace; color: var(--text-dim); margin-bottom: 0.5rem; font-size: 0.85rem; }
+    .toc { background: var(--surface); border: 1px solid var(--border); padding: 1.25rem 1.5rem; margin-bottom: 3rem; }
+    .toc h4 { margin: 0 0 0.75rem; color: var(--text-dim); }
+    .toc a { color: var(--accent); text-decoration: none; font-size: 0.9rem; }
+    .toc li { margin-bottom: 0.3rem; }
+    .section-intro { color: var(--text-dim); font-style: italic; font-size: 1rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px dashed var(--border); }
+    footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-family: 'Courier New', monospace; font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.1em; margin-top: 4rem; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Aincrad — Design Document</div>
+  <h1>Lore & World Canon</h1>
+  <div class="desc">The mythology of the floating castle and the world that will be written inside it.</div>
+</header>
+<nav>
+  <a href="index.html">Overview</a>
+  <a href="vision.html">Vision</a>
+  <a href="world.html">World Design</a>
+  <a href="systems.html">Systems</a>
+  <a href="progression.html">Progression</a>
+  <a href="combat.html">Combat</a>
+  <a href="economy.html">Economy</a>
+  <a href="lore.html" class="active">Lore</a>
+</nav>
+<main>
+
+  <div class="toc">
+    <h4>Contents</h4>
+    <ol>
+      <li><a href="#philosophy">Lore Philosophy</a></li>
+      <li><a href="#origin">The Origin — Why Aincrad Exists</a></li>
+      <li><a href="#architect">The Architect</a></li>
+      <li><a href="#arrival">The Arrival Announcement</a></li>
+      <li><a href="#chronicle">The Chronicle System</a></li>
+      <li><a href="#fragments">Lore Fragments</a></li>
+      <li><a href="#player-lore">The Living Lore</a></li>
+      <li><a href="#endgame">The Endgame — What Clearing Means</a></li>
+    </ol>
+  </div>
+
+  <h2 id="philosophy">Lore Philosophy</h2>
+  <p class="section-intro">The best lore in a game like this is the lore that players create. The admin-built mythology is the stage. The players write the play.</p>
+
+  <p>Aincrad's canon mythology serves one purpose: <strong>give players a reason to care about the world before they've built their own reasons</strong>. The lore doesn't need to be exhaustive or intricate. It needs to create atmosphere, establish stakes, and provide context that makes the player feel they've arrived somewhere with history.</p>
+
+  <p>The SAO source material gives us the essential mythology for free: a castle in the sky, 100 floors, a creator who built it as an act of will, a population trapped inside, the only exit being the summit. This is extraordinary raw material. Aincrad the server draws from this directly — not as a licensed recreation, but as an artistic response. We take the spirit and build something new with it.</p>
+
+  <p>The deeper canon — what happened on this server, who built what, who fought whom, who cleared which boss — will be written by the players. The Chronicle is where that lore lives. A server five years old should have hundreds of Chronicle entries that mean something to its community. That's the lore that matters most.</p>
+
+  <h2 id="origin">The Origin — Why Aincrad Exists</h2>
+
+  <p>The server's in-world explanation for why players are here and what the rules of the world are:</p>
+
+  <blockquote>
+    <p>The castle appeared in the sky one morning, unmistakable against the horizon. One hundred floors of iron and stone, floating in impossible defiance of gravity. No one built it. No one remembers a world without it. It simply is.</p>
+    <p>Messages appeared in every player's inventory. A sealed letter, bearing the castle's sigil. The message was simple: the gates to the first floor are open. Climb if you dare. At the summit, the architect awaits. What they offer to the one who reaches the top — no message says.</p>
+    <p>Some players refused to enter. Most could not resist.</p>
+  </blockquote>
+
+  <p>This framing accomplishes several things:</p>
+  <ul>
+    <li>It explains why players enter (curiosity, ambition, necessity) without requiring them to be "trapped"</li>
+    <li>It establishes a goal (the summit, the architect) without specifying what the reward is</li>
+    <li>It leaves open whether the world is dangerous by design or by accident</li>
+    <li>It doesn't require players to accept any particular interpretation — the castle is mysterious, and mystery is more interesting than explanation</li>
+  </ul>
+
+  <h2 id="architect">The Architect</h2>
+
+  <p>The Architect is the in-world name for the entity who created Aincrad. They are not a character who appears in the game — they are a <strong>presence</strong>. Evidence of their design is everywhere: the perfect architecture of floor labyrinths, the orchestrated difficulty of the boss encounters, the fact that resources and challenges scale so precisely with floor number.</p>
+
+  <p>The Architect communicates only through:</p>
+  <ul>
+    <li><strong>System messages</strong> — Server announcements written in a distinct formal voice: "A challenger has fallen. The castle remembers." "Floor 10 has been cleared. The ascent continues."</li>
+    <li><strong>Lore fragments</strong> — Hidden texts scattered through labyrinths and ruins that reveal pieces of the Architect's intent, but never the whole picture</li>
+    <li><strong>The summit</strong> — What waits at Floor 100. The endgame. Players must earn the right to find out.</li>
+  </ul>
+
+  <p>The real-world architect is, of course, the server admin team. This framing lets admin communications become part of the narrative — announcements about server events, boss clears, major guild conflicts can all be delivered in the Architect's voice, blending meta-communication with world-building.</p>
+
+  <div class="callout">
+    <p><strong>On the SAO parallel:</strong> Kayaba Akihiko, in the anime, was the Architect. He built the world. He set the rules. He appeared to players only at the beginning and the end. This is the exact role the server's admin team should occupy — present in the structure of the world, absent from its day-to-day dramas. The Architect made the castle. The players make the history.</p>
+  </div>
+
+  <h2 id="arrival">The Arrival Announcement</h2>
+
+  <p>When a player logs into Aincrad for the first time, they receive the following message. This is the server's founding text — the in-world statement of what this place is.</p>
+
+  <div class="lore-fragment">
+    <div class="fragment-header">System Message — Arrival</div>
+    <p>Welcome to Aincrad.</p>
+    <p>You stand on the First Floor of a castle that exists outside the world you knew. One hundred floors rise above you. Each is a world complete unto itself. Each has a master — a creature of iron and darkness that guards the passage to the next. Kill the master. Ascend.</p>
+    <p>Some things you should know:</p>
+    <p>What you build here is real. What you lose here is lost. What you earn here is yours until someone takes it.</p>
+    <p>The castle does not care about fairness. It cares about strength, cunning, cooperation, and will. Be all of these things, or find others who are.</p>
+    <p>Your name will be remembered. This castle keeps records.</p>
+    <p>The summit exists. What waits there, you will learn only by reaching it.</p>
+    <p>Begin.</p>
+    <p>— The Architect</p>
+  </div>
+
+  <h2 id="chronicle">The Chronicle System</h2>
+
+  <p>The Chronicle is Aincrad's <strong>permanent public record</strong>. It is a running document, accessible in-game at any Floor Registry and on the server website, that records significant server events automatically and manually.</p>
+
+  <h3>What Gets Chronicled</h3>
+
+  <table style="width:100%;border-collapse:collapse;font-size:0.9rem;margin:1rem 0;">
+    <thead>
+      <tr style="background:var(--surface2);">
+        <th style="text-align:left;padding:0.6rem 0.8rem;color:var(--text-dim);font-family:'Courier New',monospace;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;border-bottom:1px solid var(--border);font-weight:normal;">Event Type</th>
+        <th style="text-align:left;padding:0.6rem 0.8rem;color:var(--text-dim);font-family:'Courier New',monospace;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;border-bottom:1px solid var(--border);font-weight:normal;">Auto/Manual</th>
+        <th style="text-align:left;padding:0.6rem 0.8rem;color:var(--text-dim);font-family:'Courier New',monospace;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;border-bottom:1px solid var(--border);font-weight:normal;">Details Recorded</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding:0.7rem 0.8rem;border-bottom:1px solid var(--border);color:var(--gold);font-family:'Courier New',monospace;">Floor Boss Clear</td>
+        <td style="padding:0.7rem 0.8rem;border-bottom:1px solid var(--border);">Auto</td>
+        <td style="padding:0.7rem 0.8rem;border-bottom:1px solid var(--border);">Date, time, all party members, final blow player, boss name, attempt number</td>
+      </tr>
+      <tr>
+        <td style="padding:0.7rem 0.8rem;border-bottom:1px solid var(--border);color:var(--gold);font-family:'Courier New',monospace;">War Declaration</td>
+        <td style="padding:0.7rem 0.8rem;border-bottom:1px solid var(--border);">Auto</td>
+        <td style="padding:0.7rem 0.8rem;border-bottom:1px solid var(--border);">Declaring Covenant, target Covenant, date, any stated casus belli</td>
+      </tr>
+      <tr>
+        <td style="padding:0.7rem 0.8rem;border-bottom:1px solid var(--border);color:var(--gold);font-family:'Courier New',monospace;">Soul Binding</td>
+        <td style="padding:0.7rem 0.8rem;border-bottom:1px solid var(--border);">Auto</td>
+        <td style="padding:0.7rem 0.8rem;border-bottom:1px solid var(--border);">Binder, bound player, location, date. Release conditions and resolution recorded when it ends.</td>
+      </tr>
+      <tr>
+        <td style="padding:0.7rem 0.8rem;border-bottom:1px solid var(--border);color:var(--gold);font-family:'Courier New',monospace;">Covenant Founding</td>
+        <td style="padding:0.7rem 0.8rem;border-bottom:1px solid var(--border);">Auto</td>
+        <td style="padding:0.7rem 0.8rem;border-bottom:1px solid var(--border);">Name, founders, date, floor</td>
+      </tr>
+      <tr>
+        <td style="padding:0.7rem 0.8rem;border-bottom:1px solid var(--border);color:var(--gold);font-family:'Courier New',monospace;">Legendary Item Forged</td>
+        <td style="padding:0.7rem 0.8rem;border-bottom:1px solid var(--border);">Auto</td>
+        <td style="padding:0.7rem 0.8rem;border-bottom:1px solid var(--border);">Smith, item name, date. This is a server event.</td>
+      </tr>
+      <tr>
+        <td style="padding:0.7rem 0.8rem;border-bottom:1px solid var(--border);color:var(--gold);font-family:'Courier New',monospace;">Historical Battle</td>
+        <td style="padding:0.7rem 0.8rem;border-bottom:1px solid var(--border);">Manual (admin)</td>
+        <td style="padding:0.7rem 0.8rem;border-bottom:1px solid var(--border);">Written account, participants, outcome. Added at admin discretion for significant conflicts.</td>
+      </tr>
+      <tr>
+        <td style="padding:0.7rem 0.8rem;color:var(--gold);font-family:'Courier New',monospace;">The Cleared</td>
+        <td style="padding:0.7rem 0.8rem;">Auto</td>
+        <td style="padding:0.7rem 0.8rem;">The player who clears the 100th floor boss. This entry will never be deleted.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Chronicle Access</h3>
+  <p>The Chronicle is publicly accessible — anyone can read it, on the server website or at any floor registry. It is the history of Aincrad, continuously written. New players can read it to understand what's happened before they arrived. Old players can read their own entries. Enemies can read each other's histories.</p>
+
+  <h2 id="fragments">Lore Fragments</h2>
+
+  <p>Scattered throughout labyrinths, ruins, and hidden locations across all floors are <strong>Lore Fragments</strong> — written texts that reveal pieces of the Architect's history, the castle's pre-player past, and hints about what lies at the summit.</p>
+
+  <p>Fragments are <strong>physical items</strong> that can be found, collected, copied, and traded. A player who finds a rare fragment on Floor 12 can sell it to a lore-collector, display it in their guild hall, or simply read it and wonder. Fragments are never required to progress — they are purely for players who care about the world's mythology.</p>
+
+  <h3>Sample Fragments</h3>
+
+  <div class="lore-fragment">
+    <div class="fragment-header">Fragment #001 — Found: Floor 1, Labyrinth Entrance</div>
+    <p>I built this place because I could. There is no deeper reason. The craft was sufficient justification. What you discover in it — what you become because of it — that I could not predict.</p>
+    <p>I hope you prove interesting.</p>
+    <p>— A.</p>
+  </div>
+
+  <div class="lore-fragment">
+    <div class="fragment-header">Fragment #017 — Found: Floor 3, Ancient Ruin</div>
+    <p>Before you arrived, this floor was quiet. The trees grew. The mobs wandered their patterns. Nothing had a name.</p>
+    <p>Now you are here, and already things are being named. Already there is history. A player was killed near the eastern river. Two others built a shelter together and then argued. One left.</p>
+    <p>The castle was always waiting for this. I was always waiting for this.</p>
+    <p>History requires witnesses.</p>
+  </div>
+
+  <div class="lore-fragment">
+    <div class="fragment-header">Fragment #044 — Found: Floor 9, Desert Ruin</div>
+    <p>The creatures that guard each floor were not given names by me. They existed before I designed the floors around them. I found them and built their stages.</p>
+    <p>I do not know what they want. I am not certain they want anything. But they have never let anyone pass without a fight, and they have never lost to a single player acting alone.</p>
+    <p>Perhaps that is instruction enough.</p>
+  </div>
+
+  <h2 id="player-lore">The Living Lore</h2>
+
+  <p>The most important lore in Aincrad will be what players create. The Chronicle is the formal record, but the real mythology lives in:</p>
+
+  <ul>
+    <li><strong>Guild founding stories</strong> — why a guild formed, what it stands for, what it has survived</li>
+    <li><strong>Famous players</strong> — the names that become known across the server, the fighters and merchants and leaders whose reputations precede them</li>
+    <li><strong>Notorious events</strong> — the great betrayals, the impossible defenses, the first boss clears that required 40 attempts</li>
+    <li><strong>Named items</strong> — the sword that a famous player carried for a year before losing it in a vault raid</li>
+    <li><strong>Fallen guilds</strong> — Covenants that rose and fell, whose ruins still stand on whatever floor they claimed</li>
+  </ul>
+
+  <p>The admin team's job is to create conditions where these stories can happen, then get out of the way and let them. Occasionally, capture them in the Chronicle.</p>
+
+  <div class="callout warn">
+    <p><strong>On admin-created story:</strong> It is tempting to run server events, scripted quests, and admin-led narrative arcs. Resist this. The moment admin-created story competes with player-created story, players disengage from making their own. The Architect is a presence, not a protagonist. The protagonists are the players.</p>
+  </div>
+
+  <h2 id="endgame">The Endgame — What Clearing Means</h2>
+
+  <p>At some point — likely years from now, if the server thrives — a player or group of players will kill the Floor 100 Boss. This is <strong>the endgame event</strong>. What happens then?</p>
+
+  <p>This is a question that deserves serious thought before the server launches, because the answer shapes everything about what the server means to its community.</p>
+
+  <h3>Option A: The World Continues</h3>
+  <p>Clearing Floor 100 is recorded in the Chronicle. The player receives the ultimate title. The world continues — a new "Post-Aincrad" era begins, with new content, new threats, new reasons to fight. The server doesn't end; it evolves. The original 100 floors remain as established territory, and floors 101+ open as new contested frontier.</p>
+
+  <h3>Option B: The Final Reset</h3>
+  <p>Clearing Floor 100 ends the era. A server reset occurs — new map, new characters, new run. The cleared player's name is enshrined permanently. The lore shifts: "In the Second Era of Aincrad..." A new cast of players begins the climb. History remembers who cleared the first era.</p>
+
+  <h3>Option C: The Architect's Gift</h3>
+  <p>Clearing Floor 100 triggers a specific endgame sequence — the Architect appears, makes good on the original promise, and grants something meaningful to the clearing party and the server community. What that something is remains deliberately unspecified until the community earns the right to find out.</p>
+
+  <div class="callout">
+    <p><strong>Current position:</strong> This decision is deliberately deferred. The server must be built, populated, and thrive before the endgame matters. When a Floor 100 clear is actually within sight, the community should have a voice in what it means. The Architect's promise should be kept — but what exactly was promised remains, for now, the mystery that drives the ascent.</p>
+  </div>
+
+  <h3>One Truth</h3>
+  <p>Regardless of which endgame path is chosen: <strong>the names of the players who cleared Aincrad will never be deleted from the Chronicle</strong>. Whatever else changes, whatever eras come and go — the first ones to reach the top will be remembered. This is the promise the Architect makes at the start. This is the promise the server will keep.</p>
+
+</main>
+<footer>AINCRAD PROJECT &nbsp;|&nbsp; LORE &nbsp;|&nbsp; ARCHITECT: KAYABA</footer>
+</body>
+</html>

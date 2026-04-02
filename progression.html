@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Progression — Aincrad</title>
+  <style>
+    :root {
+      --bg: #0a0a0f; --surface: #111118; --surface2: #161622; --border: #1e1e2e;
+      --accent: #7c6af7; --accent-dim: #4a4080; --text: #e0e0f0; --text-dim: #7070a0;
+      --text-muted: #3a3a5a; --gold: #c9a84c; --danger: #c45c5c; --safe: #5ca87c; --warn: #c4a05c;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Georgia', serif; line-height: 1.75; }
+    header { border-bottom: 1px solid var(--border); padding: 2rem; text-align: center; background: linear-gradient(180deg, #0d0d1a 0%, var(--bg) 100%); }
+    header .eyebrow { font-family: 'Courier New', monospace; font-size: 0.75rem; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.5rem; }
+    header h1 { font-size: 2.2rem; font-weight: normal; color: var(--gold); }
+    header .desc { color: var(--text-dim); font-style: italic; margin-top: 0.5rem; }
+    nav { display: flex; justify-content: center; gap: 0.5rem; padding: 1rem 2rem; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+    nav a { color: var(--text-dim); text-decoration: none; font-family: 'Courier New', monospace; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 0.8rem; border: 1px solid var(--text-muted); transition: all 0.2s; }
+    nav a:hover, nav a.active { color: var(--accent); border-color: var(--accent); }
+    main { max-width: 900px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+    h2 { font-size: 1.5rem; font-weight: normal; color: var(--gold); margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }
+    h3 { font-size: 1.1rem; font-weight: normal; color: var(--accent); margin: 2rem 0 0.75rem; }
+    h4 { font-size: 0.9rem; font-weight: bold; color: var(--text); margin: 1.25rem 0 0.5rem; font-family: 'Courier New', monospace; letter-spacing: 0.05em; text-transform: uppercase; }
+    p { margin-bottom: 1rem; color: var(--text); font-size: 0.98rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; color: var(--text); font-size: 0.95rem; }
+    strong { color: var(--gold); font-weight: normal; }
+    .callout { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+    .callout.danger { border-left-color: var(--danger); }
+    .callout.warn { border-left-color: var(--warn); }
+    .callout p { margin: 0; font-size: 0.92rem; color: var(--text-dim); }
+    .callout strong { color: var(--text); }
+    .skill-tree { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .skill-card { background: var(--surface); border: 1px solid var(--border); border-top: 2px solid var(--accent-dim); padding: 1.25rem; }
+    .skill-card .skill-tag { font-family: 'Courier New', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4rem; }
+    .skill-card h4 { margin: 0 0 0.5rem; text-transform: none; font-family: 'Georgia', serif; font-size: 1rem; color: var(--gold); letter-spacing: 0; }
+    .skill-card p { font-size: 0.88rem; color: var(--text-dim); margin: 0 0 0.6rem; }
+    .skill-card .skills-list { font-family: 'Courier New', monospace; font-size: 0.78rem; color: var(--text-muted); }
+    .tier-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+    .tier-table th { text-align: left; padding: 0.6rem 0.8rem; background: var(--surface2); color: var(--text-dim); font-family: 'Courier New', monospace; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; border-bottom: 1px solid var(--border); font-weight: normal; }
+    .tier-table td { padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .tier-table tr:last-child td { border-bottom: none; }
+    .tier-table td:first-child { color: var(--gold); font-family: 'Courier New', monospace; }
+    .toc { background: var(--surface); border: 1px solid var(--border); padding: 1.25rem 1.5rem; margin-bottom: 3rem; }
+    .toc h4 { margin: 0 0 0.75rem; color: var(--text-dim); }
+    .toc a { color: var(--accent); text-decoration: none; font-size: 0.9rem; }
+    .toc li { margin-bottom: 0.3rem; }
+    .section-intro { color: var(--text-dim); font-style: italic; font-size: 1rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px dashed var(--border); }
+    footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-family: 'Courier New', monospace; font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.1em; margin-top: 4rem; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Aincrad — Design Document</div>
+  <h1>Progression & Skills</h1>
+  <div class="desc">How players grow, specialize, and leave their mark on the world.</div>
+</header>
+<nav>
+  <a href="index.html">Overview</a>
+  <a href="vision.html">Vision</a>
+  <a href="world.html">World Design</a>
+  <a href="systems.html">Systems</a>
+  <a href="progression.html" class="active">Progression</a>
+  <a href="combat.html">Combat</a>
+  <a href="economy.html">Economy</a>
+  <a href="lore.html">Lore</a>
+</nav>
+<main>
+
+  <div class="toc">
+    <h4>Contents</h4>
+    <ol>
+      <li><a href="#philosophy">Progression Philosophy</a></li>
+      <li><a href="#skillsystem">The Skill System</a></li>
+      <li><a href="#combat-skills">Combat Skills</a></li>
+      <li><a href="#craft-skills">Crafting & Trade Skills</a></li>
+      <li><a href="#life-skills">Life Skills</a></li>
+      <li><a href="#titles">Titles & Achievements</a></li>
+      <li><a href="#gear">Gear Progression</a></li>
+      <li><a href="#new-players">The New Player Experience</a></li>
+    </ol>
+  </div>
+
+  <h2 id="philosophy">Progression Philosophy</h2>
+  <p class="section-intro">Progression should feel earned. Every point in a skill should represent real time and real choice.</p>
+
+  <p>SAO's skill system was elegant in its simplicity: skills leveled by use, each player could hold a limited number, and mastery in one area meant deprioritizing another. The result was specialization — a world where swordsmen, blacksmiths, scouts, and healers each had a role that others couldn't fully replicate. No one could be everything.</p>
+
+  <p>This is the design principle Aincrad inherits. <strong>Specialization over generalization.</strong> A player who tries to master everything will be worse at everything than a player who focuses. This creates interdependence — the best smiths need skilled resource gatherers. The best fighters need quality gear. The best scouts need safe routes to report back on.</p>
+
+  <p>The Civ genre understood this economically but not in terms of personal stats — your Minecraft character in Civcraft was largely flat, your power coming from gear and organization. Aincrad adds the RPG layer: individual character development that creates genuine diversity in player capabilities.</p>
+
+  <div class="callout">
+    <p><strong>Core constraint:</strong> Players have a <strong>Skill Point cap</strong>. You cannot max every skill tree. Every build is a tradeoff. This is not a frustrating limitation — it is the feature. Skill caps create roles, and roles create community.</p>
+  </div>
+
+  <h2 id="skillsystem">The Skill System</h2>
+
+  <h3>How Skills Work</h3>
+  <p>Skills are leveled through <strong>use</strong>. Mining stone levels your Mining skill. Killing enemies with a sword levels your Sword skill. Brewing potions levels your Alchemy skill. There are no quests to grind for skill points — you improve at what you do.</p>
+
+  <p>Each skill runs from <strong>Level 1 to Level 1000</strong> (the SAO tradition). Each level provides a small stat bonus or unlocks a new ability. The first 100 levels come quickly. The next 400 are steady. Levels 700–1000 require serious dedication — they represent the mastery that defines a player's identity on the server.</p>
+
+  <h3>Skill Points & The Cap</h3>
+  <p>Each player has a <strong>Skill Point cap of 2,000</strong>. Total skill levels across all your skills cannot exceed this number. To invest more in one skill, you must reduce investment somewhere else (skills can be reset, but with a cost and a cooldown). This means:</p>
+  <ul>
+    <li>A player who maxes two skills at 1000 each has no points left for anything else</li>
+    <li>A well-rounded generalist might have six to eight skills at moderate levels</li>
+    <li>Most players will settle into a personal build after some experimentation</li>
+  </ul>
+
+  <h3>Skill Inheritance</h3>
+  <p>When a player dies and respawns, their skills are retained — death does not reset progress. Skills are the part of your character that is permanent. This is the counterbalance to the harsh death economy (gear loss on death) — you always keep your mastery, even when you lose everything else.</p>
+
+  <h2 id="combat-skills">Combat Skills</h2>
+  <div class="skill-tree">
+    <div class="skill-card">
+      <div class="skill-tag">Melee</div>
+      <h4>One-Handed Sword</h4>
+      <p>The classic archetype. Balanced offense and defense. The most common combat skill and the most developed in terms of high-level techniques.</p>
+      <div class="skills-list">Bonuses: Damage, attack speed, parry window<br>Capstone (Lv1000): Dual Blades (unique)</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-tag">Melee</div>
+      <h4>Two-Handed Sword</h4>
+      <p>High damage, slower attack. Crushes armor. Excels at breaking shields and pushing through reinforced enemies. Vulnerable to fast opponents.</p>
+      <div class="skills-list">Bonuses: Damage multiplier, armor penetration<br>Capstone: Cleave (AoE swing)</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-tag">Melee</div>
+      <h4>Dagger</h4>
+      <p>Speed and stealth. Low damage per hit, extreme attack rate. The assassin's weapon. Pairs with the Hiding skill for ambush builds. Critical strike mechanics.</p>
+      <div class="skills-list">Bonuses: Attack speed, crit chance, bleed<br>Capstone: Shadow Step (short blink)</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-tag">Melee</div>
+      <h4>Polearm</h4>
+      <p>Extended reach. Keeps enemies at distance. Excellent for group formations — multiple polearm users create an effective front line that's hard to breach.</p>
+      <div class="skills-list">Bonuses: Reach, slow on hit, formation bonus<br>Capstone: Phalanx Stance</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-tag">Ranged</div>
+      <h4>Bow</h4>
+      <p>Classic ranged combat. Long draw time but powerful. Essential for siege support and picking off enemies before melee engagement. High floor, very high ceiling.</p>
+      <div class="skills-list">Bonuses: Draw speed, damage, range<br>Capstone: Charged Shot (3x damage)</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-tag">Ranged</div>
+      <h4>Crossbow</h4>
+      <p>Pre-loaded burst. Lower sustained rate than Bow but faster first shot. Better in ambushes and close quarters. The choice for dungeon explorers.</p>
+      <div class="skills-list">Bonuses: Reload speed, damage, knockback<br>Capstone: Rapid Load (instant reload)</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-tag">Defense</div>
+      <h4>Shield</h4>
+      <p>Damage reduction, block mechanics, bashing. Pairs with any one-handed weapon. The tank archetype. Irreplaceable in organized group combat.</p>
+      <div class="skills-list">Bonuses: Block rate, bash stun, damage reduction<br>Capstone: Iron Will (brief invulnerability)</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-tag">Utility</div>
+      <h4>Hiding</h4>
+      <p>Reduces visibility to enemies. At high levels, enables brief invisibility in shadowed areas. The core of the stealth archetype. Requires standing still to activate at low levels.</p>
+      <div class="skills-list">Bonuses: Detection reduction, movement while hidden<br>Capstone: Shadow Cloak (full invisibility)</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-tag">Utility</div>
+      <h4>Parry</h4>
+      <p>Reduces damage taken when correctly timing blocks. Rewards mechanical skill — the best parry players take dramatically less damage than average. Hard to master, transformative at high levels.</p>
+      <div class="skills-list">Bonuses: Damage reduction, counter-attack window<br>Capstone: Perfect Parry (reflect damage)</div>
+    </div>
+  </div>
+
+  <h2 id="craft-skills">Crafting & Trade Skills</h2>
+  <div class="skill-tree">
+    <div class="skill-card">
+      <div class="skill-tag">Crafting</div>
+      <h4>Smithing</h4>
+      <p>The most economically powerful skill. High-level smiths produce the best weapons and armor on the server. Cannot be fully substituted by any other skill. Master smiths are among the most valuable players in any guild.</p>
+      <div class="skills-list">Bonuses: Item quality tiers, unlock recipes<br>Capstone: Legendary Forging</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-tag">Crafting</div>
+      <h4>Alchemy</h4>
+      <p>Potions, poisons, and alchemical reagents. Support role for combat through buff potions. Damage role through poison applications. Economic role through selling consumables.</p>
+      <div class="skills-list">Bonuses: Potion potency, duration, batch size<br>Capstone: Master Elixir</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-tag">Crafting</div>
+      <h4>Tailoring</h4>
+      <p>Cloth and light armor. Produces the best light armor for stealth and mage builds. Also creates banners, flags, and Covenant insignia — the aesthetic layer of the game.</p>
+      <div class="skills-list">Bonuses: Light armor quality, special fabrics<br>Capstone: Masterwork Garb</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-tag">Crafting</div>
+      <h4>Cooking</h4>
+      <p>Underestimated. High-level cooks produce food items with powerful combat buffs. A good cook in a raiding party is a force multiplier. Cooking also drives the economy of agricultural floors.</p>
+      <div class="skills-list">Bonuses: Buff potency, saturation, effects<br>Capstone: Feast of Champions</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-tag">Gathering</div>
+      <h4>Mining</h4>
+      <p>Ore yield, rare mineral discovery, tunneling speed. The backbone of the crafting economy. Deep miners discover resource deposits others miss. The most foundational gathering skill.</p>
+      <div class="skills-list">Bonuses: Ore yield, rare finds, speed<br>Capstone: Master Prospector</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-tag">Gathering</div>
+      <h4>Herbalism</h4>
+      <p>Rare plant harvesting, yield bonuses, identification of alchemical properties. Feeds directly into Alchemy. Essential for players building the potion economy on early floors.</p>
+      <div class="skills-list">Bonuses: Yield, rare herb discovery<br>Capstone: Flora Sense (hidden herbs visible)</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-tag">Trade</div>
+      <h4>Merchant</h4>
+      <p>Discounts from NPC shops, better NPC sell prices, access to rare NPC stock. The economic specialist. Low combat value, high economic value. Pairs with Smithing to create the ideal shopkeeper build.</p>
+      <div class="skills-list">Bonuses: Buy/sell rates, exclusive stock access<br>Capstone: Trade Magnate</div>
+    </div>
+  </div>
+
+  <h2 id="life-skills">Life Skills</h2>
+  <div class="skill-tree">
+    <div class="skill-card">
+      <div class="skill-tag">Exploration</div>
+      <h4>Cartography</h4>
+      <p>Map creation and accuracy. High-level cartographers produce the most detailed, accurate maps of new floors — sold to guilds scouting expansion. A niche but valued profession.</p>
+      <div class="skills-list">Bonuses: Map detail, range, reveal speed</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-tag">Exploration</div>
+      <h4>Acrobatics</h4>
+      <p>Fall damage reduction, climbing speed, parkour movement. The scout's essential life skill. High-level acrobats reach locations others physically cannot. Invaluable for reconnaissance.</p>
+      <div class="skills-list">Bonuses: Fall reduction, climb speed, wall grab</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-tag">Social</div>
+      <h4>Leadership</h4>
+      <p>Passive bonuses to nearby Covenant allies. Aura effects that buff group performance. The command archetype. A high-level Leader running alongside a combat group makes everyone better.</p>
+      <div class="skills-list">Bonuses: Group damage, defense, morale aura</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-tag">Social</div>
+      <h4>Fishing</h4>
+      <p>Yield and rare catch bonuses. Access to floor-specific aquatic resources. Peaceful skill but economically meaningful on aquatic floors. The contemplative player's choice.</p>
+      <div class="skills-list">Bonuses: Catch rate, rare items, special bait</div>
+    </div>
+  </div>
+
+  <h2 id="titles">Titles & Achievements</h2>
+
+  <p>Titles are <strong>permanent public recognitions</strong> displayed alongside a player's name. They cannot be purchased or earned through grinding — only through specific significant achievements.</p>
+
+  <table class="tier-table">
+    <thead>
+      <tr><th>Title</th><th>Awarded For</th><th>Rarity</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Frontliner</td>
+        <td>Participated in a Floor Boss first clear</td>
+        <td>Uncommon — one per floor, up to 24 players</td>
+      </tr>
+      <tr>
+        <td>Slayer of [Boss Name]</td>
+        <td>Delivered the killing blow to a Floor Boss</td>
+        <td>Unique — one player per boss, ever</td>
+      </tr>
+      <tr>
+        <td>The Black Swordsman</td>
+        <td>Reach Level 1000 in One-Handed Sword and complete a boss solo</td>
+        <td>Unique or near-unique — most prestigious combat title</td>
+      </tr>
+      <tr>
+        <td>Grandmaster Smith</td>
+        <td>Reach Level 1000 in Smithing</td>
+        <td>Rare — maybe 5–10 on the server at any time</td>
+      </tr>
+      <tr>
+        <td>The Cleared</td>
+        <td>Player who achieves the final boss kill and clears all 100 floors</td>
+        <td>Server-defining — the first player to achieve this ends the era</td>
+      </tr>
+      <tr>
+        <td>Nation Founder</td>
+        <td>Founded a Covenant that reached 50+ members</td>
+        <td>Uncommon — maybe 10–20 over the server's life</td>
+      </tr>
+      <tr>
+        <td>The Chronicled</td>
+        <td>Participated in a server event considered historically significant by player consensus</td>
+        <td>Rare — awarded by player vote after major events</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="gear">Gear Progression</h2>
+
+  <h3>The Death Economy</h3>
+  <p>When a player dies in the field or in combat, they drop a portion of their inventory. This is the hard edge of Aincrad. The exact percentage is a tuning decision (starting suggestion: <strong>30% of items dropped on death, chosen randomly from non-equipped gear</strong>), but the principle is non-negotiable: death has a material cost.</p>
+
+  <p>This is why good gear matters. This is why the economy exists. This is why you don't fight recklessly. The best-geared players have the most to lose.</p>
+
+  <div class="callout danger">
+    <p><strong>Equipped gear exception:</strong> Items currently worn (armor, held weapon) are NOT dropped on death — only inventory items. This prevents a single death from stripping a player bare. It is punishing but not devastating.</p>
+  </div>
+
+  <h3>Gear Tiers</h3>
+  <table class="tier-table">
+    <thead>
+      <tr><th>Tier</th><th>Source</th><th>Power Level</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Common</td>
+        <td>Basic crafting, NPC shops</td>
+        <td>Baseline</td>
+        <td>Where everyone starts. Adequate for Floors 1–3.</td>
+      </tr>
+      <tr>
+        <td>Uncommon</td>
+        <td>Skilled crafting, Field Boss drops</td>
+        <td>+20%</td>
+        <td>The standard for active adventurers. Mid-floor capable.</td>
+      </tr>
+      <tr>
+        <td>Rare</td>
+        <td>Master smiths, Floor Boss drops</td>
+        <td>+50%</td>
+        <td>Sought after. Worth fighting over. Names begin to matter.</td>
+      </tr>
+      <tr>
+        <td>Unique</td>
+        <td>First-clear Boss drops, specific lore quests</td>
+        <td>+100%</td>
+        <td>Named items. One-of-a-kind. The player who has this sword is known for it.</td>
+      </tr>
+      <tr>
+        <td>Legendary</td>
+        <td>Grandmaster smith + unique materials + mastery</td>
+        <td>+150%</td>
+        <td>May not exist at launch. The theoretical ceiling. Server events when one is created.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Named Items</h3>
+  <p>Unique and Legendary items have <strong>permanent names</strong> and are tracked in the server Chronicle. A sword with a history — carried by a famous player, used to kill a Floor Boss — accumulates lore. Players who acquire famous items inherit their reputation. Enemies will know what you carry.</p>
+
+  <h2 id="new-players">The New Player Experience</h2>
+
+  <p>The hardest design challenge: making the game welcoming without making it soft. New players must be able to enter the world, get their footing, and find a place — without the experience being trivial or patronizing.</p>
+
+  <h3>The Newcomer's Grace</h3>
+  <p>New players (accounts less than 72 hours old) receive <strong>Newcomer Status</strong>:</p>
+  <ul>
+    <li>No item drop on death for the first 72 hours</li>
+    <li>Visible marker (small icon) that signals to other players they are new — attacking them carries extra karma cost</li>
+    <li>Access to a free starter kit from the main town registry on Floor 1: basic iron gear, a small amount of Col, and a Teleport Crystal</li>
+    <li>A brief tutorial dungeon available from Floor 1's main town that explains the core systems</li>
+  </ul>
+
+  <div class="callout warn">
+    <p><strong>Predator behavior:</strong> Players who repeatedly target Newcomers despite the karma cost will face escalating social consequences. The karma system handles most of this organically. Habitual new-player predation is one of the fastest ways to earn Red status and get hunted by the server community.</p>
+  </div>
+
+  <h3>The Guild Invitation System</h3>
+  <p>Established Covenants can designate themselves as <strong>Recruitment Open</strong>, making them visible to new players on the main town notice board. New players looking for a home can browse active guilds, see their reputation and floor activity, and send join requests. This onboarding pipeline is crucial — a new player who joins a guild in their first session is 10x more likely to stay than one who logs in alone.</p>
+
+</main>
+<footer>AINCRAD PROJECT &nbsp;|&nbsp; PROGRESSION &nbsp;|&nbsp; ARCHITECT: KAYABA</footer>
+</body>
+</html>

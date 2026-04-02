@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>World Design — Aincrad</title>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --surface2: #161622;
+      --border: #1e1e2e;
+      --accent: #7c6af7;
+      --accent-dim: #4a4080;
+      --text: #e0e0f0;
+      --text-dim: #7070a0;
+      --text-muted: #3a3a5a;
+      --gold: #c9a84c;
+      --danger: #c45c5c;
+      --safe: #5ca87c;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Georgia', serif; line-height: 1.75; }
+    header { border-bottom: 1px solid var(--border); padding: 2rem; text-align: center; background: linear-gradient(180deg, #0d0d1a 0%, var(--bg) 100%); }
+    header .eyebrow { font-family: 'Courier New', monospace; font-size: 0.75rem; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.5rem; }
+    header h1 { font-size: 2.2rem; font-weight: normal; color: var(--gold); letter-spacing: 0.05em; }
+    header .desc { color: var(--text-dim); font-style: italic; margin-top: 0.5rem; }
+    nav { display: flex; justify-content: center; gap: 0.5rem; padding: 1rem 2rem; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+    nav a { color: var(--text-dim); text-decoration: none; font-family: 'Courier New', monospace; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 0.8rem; border: 1px solid var(--text-muted); transition: all 0.2s; }
+    nav a:hover, nav a.active { color: var(--accent); border-color: var(--accent); }
+    main { max-width: 900px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+    h2 { font-size: 1.5rem; font-weight: normal; color: var(--gold); margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); letter-spacing: 0.03em; }
+    h3 { font-size: 1.1rem; font-weight: normal; color: var(--accent); margin: 2rem 0 0.75rem; letter-spacing: 0.03em; }
+    h4 { font-size: 0.95rem; font-weight: bold; color: var(--text); margin: 1.25rem 0 0.5rem; font-family: 'Courier New', monospace; letter-spacing: 0.05em; text-transform: uppercase; }
+    p { margin-bottom: 1rem; color: var(--text); font-size: 0.98rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; color: var(--text); font-size: 0.95rem; }
+    strong { color: var(--gold); font-weight: normal; }
+    .callout { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+    .callout.danger { border-left-color: var(--danger); }
+    .callout.safe { border-left-color: var(--safe); }
+    .callout p { margin: 0; font-size: 0.92rem; color: var(--text-dim); }
+    .callout strong { color: var(--text); }
+    .floor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .floor-card { background: var(--surface); border: 1px solid var(--border); border-top: 2px solid var(--accent-dim); padding: 1.25rem; }
+    .floor-card .floor-num { font-family: 'Courier New', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.4rem; }
+    .floor-card h4 { margin: 0 0 0.5rem; font-size: 1rem; color: var(--gold); text-transform: none; font-family: 'Georgia', serif; letter-spacing: 0; }
+    .floor-card p { font-size: 0.88rem; color: var(--text-dim); margin: 0 0 0.75rem; }
+    .floor-card .tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .tag { font-family: 'Courier New', monospace; font-size: 0.7rem; padding: 0.2rem 0.5rem; border: 1px solid var(--border); color: var(--text-muted); }
+    .tag.danger { border-color: var(--danger); color: var(--danger); }
+    .tag.safe { border-color: var(--safe); color: var(--safe); }
+    .tag.boss { border-color: var(--gold); color: var(--gold); }
+    .zone-table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; font-size: 0.9rem; }
+    .zone-table th { text-align: left; padding: 0.6rem 0.8rem; background: var(--surface2); color: var(--text-dim); font-family: 'Courier New', monospace; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; border-bottom: 1px solid var(--border); font-weight: normal; }
+    .zone-table td { padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .zone-table tr:last-child td { border-bottom: none; }
+    .zone-table td:first-child { color: var(--gold); font-family: 'Courier New', monospace; font-size: 0.85rem; }
+    footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-family: 'Courier New', monospace; font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.1em; margin-top: 4rem; }
+    .section-intro { color: var(--text-dim); font-style: italic; font-size: 1rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px dashed var(--border); }
+    .toc { background: var(--surface); border: 1px solid var(--border); padding: 1.25rem 1.5rem; margin-bottom: 3rem; }
+    .toc h4 { margin: 0 0 0.75rem; color: var(--text-dim); }
+    .toc ol { margin-left: 1.25rem; }
+    .toc li { margin-bottom: 0.3rem; }
+    .toc a { color: var(--accent); text-decoration: none; font-size: 0.9rem; }
+    .toc a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Aincrad — Design Document</div>
+  <h1>World Design</h1>
+  <div class="desc">Floor structure, geography, zones, and the architecture of ascent.</div>
+</header>
+<nav>
+  <a href="index.html">Overview</a>
+  <a href="vision.html">Vision</a>
+  <a href="world.html" class="active">World Design</a>
+  <a href="systems.html">Systems</a>
+  <a href="progression.html">Progression</a>
+  <a href="combat.html">Combat</a>
+  <a href="economy.html">Economy</a>
+  <a href="lore.html">Lore</a>
+</nav>
+<main>
+
+  <div class="toc">
+    <h4>Contents</h4>
+    <ol>
+      <li><a href="#philosophy">Design Philosophy</a></li>
+      <li><a href="#structure">The Castle Structure</a></li>
+      <li><a href="#floors">Floor Anatomy</a></li>
+      <li><a href="#zones">Zone Types</a></li>
+      <li><a href="#catalog">Floor Catalog (Floors 1–20)</a></li>
+      <li><a href="#travel">Travel & Navigation</a></li>
+      <li><a href="#boss">Floor Boss Framework</a></li>
+      <li><a href="#launch">Launch Scope</a></li>
+    </ol>
+  </div>
+
+  <h2 id="philosophy">Design Philosophy</h2>
+  <p class="section-intro">The world is the first argument. Before players engage with any system, they must feel that they've arrived somewhere worth fighting for.</p>
+
+  <p>Aincrad is not a procedurally generated Minecraft world. It is a <strong>constructed place</strong> with intention behind every biome, every labyrinth, every safe town. Players should feel the difference between floors — not just see it in a number, but experience it in the texture of the world, the quality of the light, the density of the danger.</p>
+
+  <p>The source material gives us a strong foundation: SAO's Aincrad was a floating castle of 100 floors, each its own complete world — fields, forests, towns, dungeons, a boss. No two floors were the same. Floor 1 was sun-lit plains. Floor 22 was eternal night. Floor 55 was desert. The variety wasn't cosmetic; it drove the economy (different resources per floor), the social geography (powerful guilds claimed high floors), and the emotional arc of the ascent.</p>
+
+  <p>The Civ genre adds the second layer: <strong>permanence</strong>. In Civcraft, the map wasn't reset. What you built stayed. What you lost stayed lost. The geography accumulated history — players knew which city had been sacked, which vault had fallen, which player had been pearled in which region. The world became a living record of what had happened in it.</p>
+
+  <p>Aincrad must be both. Beautiful and dangerous. Permanent and evolving.</p>
+
+  <div class="callout">
+    <p><strong>Design Principle:</strong> Every floor should have at least one thing worth coming back for after it's cleared — a resource, a safe town with established commerce, a guild hall worth visiting. Floors are not content to be consumed and discarded. They are neighborhoods.</p>
+  </div>
+
+  <h2 id="structure">The Castle Structure</h2>
+
+  <p>Aincrad is a vertical world. The castle sits in the sky — an iron and stone structure of immense scale, each floor a disc of land suspended above the previous one. From the ground of any floor, players cannot see what lies above. The ceiling is stone. The only way up is through the labyrinth and past the Floor Boss.</p>
+
+  <p>In Minecraft terms, each floor is a <strong>separate world/dimension</strong> loaded on the server. This is the most technically sound approach and offers several advantages:</p>
+
+  <ul>
+    <li>Floor aesthetics can be controlled precisely — sky color, weather, ambient sound, mob spawning rules</li>
+    <li>PvP rules, build permissions, and mechanics can differ per floor</li>
+    <li>Lower floors can be kept loaded even after being cleared without affecting performance on active floors</li>
+    <li>The "ceiling" effect is natural — each world has defined borders</li>
+  </ul>
+
+  <p>Each floor world is approximately <strong>1,500 × 1,500 blocks</strong> of playable terrain. Large enough to feel expansive, small enough that the world feels populated rather than empty at low player counts. This is a deliberate constraint — Civcraft's maps were enormous and much of the world was unpopulated wasteland. Aincrad should feel alive.</p>
+
+  <h2 id="floors">Floor Anatomy</h2>
+
+  <p>Every floor, regardless of theme, shares the same structural DNA:</p>
+
+  <h3>The Main Settlement</h3>
+  <p>Each floor has one <strong>Main Town</strong> — a pre-built settlement that serves as the floor's safe zone and social hub. This is where players respawn after dying on that floor (if they've registered there), where shops cluster, where guilds post notices. The main town is fully PvP-disabled and has admin-reinforced structures that cannot be destroyed.</p>
+
+  <p>The main town is <strong>designed, not generated</strong>. It should have a distinct architectural style matching the floor's theme, meaningful layout (market district, inn, smithy, quest board), and space for player-built additions within designated plots.</p>
+
+  <div class="callout safe">
+    <p><strong>Safe Zone:</strong> PvP disabled. All block reinforcement is admin-tier (indestructible). Player shops may be established. The town is a neutral space — even enemies are safe within its borders.</p>
+  </div>
+
+  <h3>The Fields</h3>
+  <p>The majority of each floor is <strong>open field</strong> — the explorable wilderness where monsters roam, resources are gathered, and PvP is live. The fields are dangerous. Players venture out to farm, explore, and fight. Field terrain varies by floor theme but always includes:</p>
+  <ul>
+    <li>Regular mob spawns scaling to floor difficulty</li>
+    <li>Resource nodes (ores, plants, trees) tied to the floor's biome</li>
+    <li>Named <strong>Field Bosses</strong> — powerful mobs that roam specific areas, stronger than regular mobs but weaker than the Floor Boss, dropping valuable loot</li>
+    <li>Abandoned structures — dungeonettes, ruins, hidden chests with lore fragments</li>
+    <li>Player-claimable land for building (outside safe zones)</li>
+  </ul>
+
+  <div class="callout danger">
+    <p><strong>Field Zone:</strong> Full PvP enabled. No admin protection. Player structures can be attacked. Dying here carries the full death penalty. Venture prepared.</p>
+  </div>
+
+  <h3>The Labyrinth</h3>
+  <p>Every floor has a <strong>Labyrinth</strong> — a dungeon complex that connects the floor to the next. The Labyrinth is the most dangerous zone on the floor. It contains:</p>
+  <ul>
+    <li>The densest mob spawning on the floor</li>
+    <li>Navigation challenges (the layout is genuinely maze-like, no map)</li>
+    <li>The Floor Boss Chamber at its deepest point</li>
+    <li>Unique loot found nowhere else on the floor</li>
+    <li>Traps and hazards that punish careless rushing</li>
+  </ul>
+  <p>The Labyrinth is hand-built, not generated. It should feel designed — with deliberate chokepoints, ambush rooms, and a sense of escalating threat as players approach the boss chamber.</p>
+
+  <h3>The Boss Chamber</h3>
+  <p>A sealed arena at the end of the Labyrinth. The Floor Boss cannot be reached without clearing through the Labyrinth. The chamber is large enough for a coordinated raid group. Once a boss attempt begins, the chamber seals — no one enters or leaves until the fight concludes or all challengers fall.</p>
+
+  <h2 id="zones">Zone Types</h2>
+
+  <table class="zone-table">
+    <thead>
+      <tr>
+        <th>Zone</th>
+        <th>PvP</th>
+        <th>Build</th>
+        <th>Danger</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Main Town</td>
+        <td>Disabled</td>
+        <td>Designated plots only</td>
+        <td>None</td>
+        <td>Admin-protected. Neutral ground for all.</td>
+      </tr>
+      <tr>
+        <td>Field</td>
+        <td>Enabled</td>
+        <td>Full player construction</td>
+        <td>Medium–High</td>
+        <td>Resource gathering, PvP, territory claiming.</td>
+      </tr>
+      <tr>
+        <td>Labyrinth Entrance</td>
+        <td>Enabled</td>
+        <td>No build</td>
+        <td>High</td>
+        <td>Outer sections of the dungeon. Mob-heavy.</td>
+      </tr>
+      <tr>
+        <td>Labyrinth Deep</td>
+        <td>Enabled</td>
+        <td>No build</td>
+        <td>Extreme</td>
+        <td>Inner sections. Elite mobs, traps, rare loot.</td>
+      </tr>
+      <tr>
+        <td>Boss Chamber</td>
+        <td>Enabled</td>
+        <td>No build</td>
+        <td>Extreme</td>
+        <td>Sealed during attempts. Full death penalty applies.</td>
+      </tr>
+      <tr>
+        <td>Floor Transition</td>
+        <td>Disabled</td>
+        <td>No build</td>
+        <td>None</td>
+        <td>The staircase between floors, unlocked after boss clear.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="catalog">Floor Catalog — Floors 1 through 20</h2>
+  <p class="section-intro">The planned first twenty floors. Each floor has a distinct identity. The full 100 will be developed as the server matures. Floors beyond 20 are intentionally undesigned — they will be shaped by what the community needs at that point in the server's history.</p>
+
+  <div class="floor-grid">
+    <div class="floor-card">
+      <div class="floor-num">Floor 01</div>
+      <h4>The Verdant Plain</h4>
+      <p>Rolling grasslands and gentle hills. The starting floor. Designed to be approachable — low danger, high resource availability, a warm-toned world that eases players into the reality of Aincrad. The main town of <em>Tolbana</em> sits at the heart of the plain.</p>
+      <div class="tags">
+        <span class="tag safe">Beginner</span>
+        <span class="tag">Plains</span>
+        <span class="tag boss">Boss: The Iron Colossus</span>
+      </div>
+    </div>
+    <div class="floor-card">
+      <div class="floor-num">Floor 02</div>
+      <h4>The Mire of Ulbus</h4>
+      <p>A swamp floor. Murky water, twisted trees, frequent fog. Footing is treacherous — players move slower in deep water. The resources here (rare alchemical plants, swamp iron) draw experienced players back even after the floor is cleared.</p>
+      <div class="tags">
+        <span class="tag">Swamp</span>
+        <span class="tag danger">Hazardous Terrain</span>
+        <span class="tag boss">Boss: Silith the Drowned</span>
+      </div>
+    </div>
+    <div class="floor-card">
+      <div class="floor-num">Floor 03</div>
+      <h4>The Amber Forest</h4>
+      <p>Dense woodland with an autumn palette. Trees here grow enormous — combat in the canopy is possible. The forest is heavily contested for its rare lumber. Field bosses roam in packs here, unlike the solitary variants on earlier floors.</p>
+      <div class="tags">
+        <span class="tag">Forest</span>
+        <span class="tag">High Lumber</span>
+        <span class="tag boss">Boss: The Horned Stag</span>
+      </div>
+    </div>
+    <div class="floor-card">
+      <div class="floor-num">Floor 04</div>
+      <h4>Ashveil</h4>
+      <p>A volcanic floor. Black rock, lava rivers, oppressive heat (periodic fire damage in exposed areas). The most hostile environment so far. Rare volcanic ores here are critical for mid-tier smithing — the economy flows through this floor.</p>
+      <div class="tags">
+        <span class="tag danger">Heat Damage</span>
+        <span class="tag">Volcanic</span>
+        <span class="tag boss">Boss: Ignarath</span>
+      </div>
+    </div>
+    <div class="floor-card">
+      <div class="floor-num">Floor 05</div>
+      <h4>The Shattered Crag</h4>
+      <p>A mountain floor. Sheer cliff faces, narrow passes, and verticality that rewards scouts and punishes armies. The first floor where organized guilds begin to contest territory seriously — the high passes are strategic chokepoints.</p>
+      <div class="tags">
+        <span class="tag">Mountain</span>
+        <span class="tag">Strategic Terrain</span>
+        <span class="tag boss">Boss: Garokhul the Cliff King</span>
+      </div>
+    </div>
+    <div class="floor-card">
+      <div class="floor-num">Floor 06</div>
+      <h4>The Crystal Tundra</h4>
+      <p>Ice and snow. Crystal formations jut from the ground — beautiful and treacherous. Slowed movement on ice. Visibility drops in blizzard events. The main town is built underground, into a massive ice cave. The floor's resource (crystalline quartz) is essential for advanced crafting.</p>
+      <div class="tags">
+        <span class="tag">Tundra</span>
+        <span class="tag danger">Blizzard Events</span>
+        <span class="tag boss">Boss: The Pale Warden</span>
+      </div>
+    </div>
+    <div class="floor-card">
+      <div class="floor-num">Floor 07</div>
+      <h4>The Sunken Reaches</h4>
+      <p>An ocean floor — the land is a series of islands connected by shallow shoals. Boat travel is required between major areas. The first truly naval floor. Guilds with boats control movement. Unique aquatic mobs and sea-floor resources.</p>
+      <div class="tags">
+        <span class="tag">Archipelago</span>
+        <span class="tag">Naval Combat</span>
+        <span class="tag boss">Boss: Kraelos of the Deep</span>
+      </div>
+    </div>
+    <div class="floor-card">
+      <div class="floor-num">Floor 08</div>
+      <h4>The Fungal Depths</h4>
+      <p>An underground mushroom biome. The "sky" here is stone — the floor exists inside the castle's superstructure. Bioluminescent fungi light the caverns. Disorienting and alien. Mob behavior is unusual — many of the creatures here are passive until provoked, then aggressive.</p>
+      <div class="tags">
+        <span class="tag">Underground</span>
+        <span class="tag">Mushroom</span>
+        <span class="tag boss">Boss: The Mycelian Sovereign</span>
+      </div>
+    </div>
+    <div class="floor-card">
+      <div class="floor-num">Floor 09</div>
+      <h4>The Gilded Waste</h4>
+      <p>A desert floor. Brutal during the day cycle (heat damage in open areas), deceptively dangerous at night (mob spawning intensifies dramatically). Ancient ruins dot the landscape — the remnants of a civilization that predates the players' arrival. Lore-heavy floor.</p>
+      <div class="tags">
+        <span class="tag">Desert</span>
+        <span class="tag danger">Day/Night Cycle Danger</span>
+        <span class="tag boss">Boss: The Tomb Regent</span>
+      </div>
+    </div>
+    <div class="floor-card">
+      <div class="floor-num">Floor 10</div>
+      <h4>Aincrad's Spine</h4>
+      <p>The tenth floor is a milestone. The floor design reflects this — it is the most vertical world yet, a massive central spire surrounded by rings of descending terrain. Clearing the tenth floor boss is the first major server achievement. A monument to the first clear group will be constructed in the main town of every floor below.</p>
+      <div class="tags">
+        <span class="tag boss">Boss: The Sentinel Archon</span>
+        <span class="tag">Milestone Floor</span>
+        <span class="tag">Monument on Clear</span>
+      </div>
+    </div>
+    <div class="floor-card">
+      <div class="floor-num">Floor 11</div>
+      <h4>The Thornwood</h4>
+      <p>A dark forest where hostile flora is as dangerous as the fauna. Thorn traps, poison spores, and canopy ambushes. This is where assassin playstyles begin to shine — the environment rewards patience and punishes charging.</p>
+      <div class="tags">
+        <span class="tag">Dark Forest</span>
+        <span class="tag danger">Environmental Traps</span>
+        <span class="tag boss">Boss: Verdath the Snarl</span>
+      </div>
+    </div>
+    <div class="floor-card">
+      <div class="floor-num">Floor 12</div>
+      <h4>The Iron Plateau</h4>
+      <p>Flat, harsh, defensible. The most territory-contested floor on the server. Its openness makes it ideal for siege warfare — large armies can maneuver freely. The first floor where organized nations typically establish major fortifications.</p>
+      <div class="tags">
+        <span class="tag">Plateau</span>
+        <span class="tag">Siege Warfare</span>
+        <span class="tag boss">Boss: The Plateau Commander</span>
+      </div>
+    </div>
+    <div class="floor-card">
+      <div class="floor-num">Floor 13</div>
+      <h4>The Wraithfen</h4>
+      <p>A perpetual-night floor. No day cycle. The darkness is mechanical — torches have reduced range, mob vision is enhanced. Undead-themed mobs. The most atmospherically oppressive floor. Players who master combat here have a significant advantage in any night raid.</p>
+      <div class="tags">
+        <span class="tag danger">Eternal Night</span>
+        <span class="tag">Undead</span>
+        <span class="tag boss">Boss: The Revenant Prince</span>
+      </div>
+    </div>
+    <div class="floor-card">
+      <div class="floor-num">Floor 14</div>
+      <h4>Cloudveil</h4>
+      <p>A sky floor — the terrain here sits above a permanent cloud layer. Players who fall off edges don't die immediately but fall through clouds into a recovery zone (with damage). Floating islands, sky bridges, and aerial mob types. Vertigo-inducing and memorable.</p>
+      <div class="tags">
+        <span class="tag">Sky Islands</span>
+        <span class="tag danger">Fall Hazard</span>
+        <span class="tag boss">Boss: The Skybreaker</span>
+      </div>
+    </div>
+    <div class="floor-card">
+      <div class="floor-num">Floor 15</div>
+      <h4>The Saltmarsh Frontier</h4>
+      <p>Coastal estuary terrain. Salt flats, tidal zones that flood periodically, fishing grounds. Economically significant — several unique seafood items used in high-tier cooking recipes only spawn here. A quieter floor that rewards patience over aggression.</p>
+      <div class="tags">
+        <span class="tag">Coastal</span>
+        <span class="tag">Fishing</span>
+        <span class="tag boss">Boss: The Tidecaller</span>
+      </div>
+    </div>
+    <div class="floor-card">
+      <div class="floor-num">Floor 16</div>
+      <h4>The Ruined City</h4>
+      <p>Urban ruins. This floor was once a great city — the Architect's records suggest it fell before the players arrived. Street-by-street combat, rooftop sniping, collapsed buildings as terrain features. The most tactically complex floor for PvP. Guilds fight over specific city districts.</p>
+      <div class="tags">
+        <span class="tag">Urban</span>
+        <span class="tag">High PvP</span>
+        <span class="tag boss">Boss: The City's Last Guardian</span>
+      </div>
+    </div>
+    <div class="floor-card">
+      <div class="floor-num">Floor 17</div>
+      <h4>The Hollowed Earth</h4>
+      <p>Another underground floor, but deeper and more complex than Floor 8. Multi-level cavern systems. The deepest caverns contain the rarest ores in the game. Getting lost here is genuinely possible. The labyrinth merges with the natural cave system — the distinction between floor and dungeon blurs.</p>
+      <div class="tags">
+        <span class="tag">Deep Cavern</span>
+        <span class="tag">Rare Resources</span>
+        <span class="tag boss">Boss: The Deepstone Colossus</span>
+      </div>
+    </div>
+    <div class="floor-card">
+      <div class="floor-num">Floor 18</div>
+      <h4>The Crimson Steppe</h4>
+      <p>Red grasslands under a blood-red sky. The aesthetic is deliberate — this floor is meant to feel like a warning. Mob difficulty jumps significantly here. The first floor where solo play becomes genuinely life-threatening for most builds. Group up or die.</p>
+      <div class="tags">
+        <span class="tag danger">High Difficulty</span>
+        <span class="tag">Open Steppe</span>
+        <span class="tag boss">Boss: The Warlord of the Red Field</span>
+      </div>
+    </div>
+    <div class="floor-card">
+      <div class="floor-num">Floor 19</div>
+      <h4>The Mirror Lakes</h4>
+      <p>Vast still lakes that perfectly reflect the "sky" above. Unusually peaceful aesthetically — but the water conceals aquatic predators, and the lake floors hold hidden entrances to the labyrinth. Deceptive. Players who underestimate this floor pay for it.</p>
+      <div class="tags">
+        <span class="tag">Lake</span>
+        <span class="tag danger">Deceptive Danger</span>
+        <span class="tag boss">Boss: The Reflection</span>
+      </div>
+    </div>
+    <div class="floor-card">
+      <div class="floor-num">Floor 20</div>
+      <h4>The Black Iron Fortress</h4>
+      <p>The twentieth floor is a fortress — the entire floor is a constructed stronghold rather than natural terrain. The aesthetic shifts from landscape to architecture. Stone corridors, iron gates, watchtowers. A preview of what floors 50+ will feel like. Clearing this floor unlocks a major server milestone and opens access to lore fragments about the Architect.</p>
+      <div class="tags">
+        <span class="tag boss">Boss: The Iron Marshal</span>
+        <span class="tag">Milestone Floor</span>
+        <span class="tag">Lore Unlock</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <p><strong>On Floors 21–100:</strong> These floors are intentionally unspecified at launch. The world should grow with the community. Floors 21–50 will be designed during active server operation, informed by how the player base uses the first twenty. Floors 51–100 are the endgame — they will be the most ambitious and most dangerous content, designed when the community is ready for them.</p>
+  </div>
+
+  <h2 id="travel">Travel & Navigation</h2>
+
+  <h3>Between Floors</h3>
+  <p>The primary method of inter-floor travel is the <strong>Floor Staircase</strong> — a physical connection between floors that opens after a Floor Boss is cleared. Walking between floors is slow but free. The staircase is a neutral zone (PvP disabled) and has no fast travel option — the journey between floors takes real time.</p>
+
+  <h3>Teleport Crystals</h3>
+  <p>The premium travel method. Teleport Crystals are <strong>consumable items</strong> that allow instant travel to any cleared floor's main town. They are:</p>
+  <ul>
+    <li>Expensive — crafted from rare materials or purchased for significant Col</li>
+    <li>Consumed on use — each crystal is one trip</li>
+    <li>Invaluable in emergencies — the ability to escape a losing fight or return home instantly has saved many lives in SAO, and it will here too</li>
+    <li>Not usable in combat or in certain dungeon zones</li>
+  </ul>
+
+  <h3>Within a Floor</h3>
+  <p>No fast travel within a floor. Walking, riding (horses, where applicable), or boat travel. The size of each floor (1,500 × 1,500 blocks) is calibrated so that crossing the floor on foot takes approximately 10–15 minutes at walking pace. This is intentional — distance should matter.</p>
+
+  <h3>Maps</h3>
+  <p>Maps must be <strong>earned</strong>. The floor terrain is not revealed by default. Players explore and map areas manually. Cartographers (a crafting specialization) create and sell maps. A complete accurate map of a new floor is a valuable commodity. The Labyrinth is never on any map — it must be navigated by memory and exploration.</p>
+
+  <h2 id="boss">Floor Boss Framework</h2>
+
+  <p>Floor Bosses are the gates of ascent. Every mechanic of the world feeds toward them — the reason players farm resources, build guilds, and develop skills is to be ready to challenge and clear the floor boss.</p>
+
+  <h3>Boss Availability</h3>
+  <p>Floor Bosses are not available to fight at any time. Each boss has a <strong>Challenge Window</strong> — specific days and hours when the boss chamber is open for attempts. Outside these windows, the boss chamber door is sealed. This serves several functions:</p>
+  <ul>
+    <li>Creates anticipation and coordinated server events</li>
+    <li>Prevents off-hours first clears with no witnesses</li>
+    <li>Allows the community to rally for major attempts</li>
+  </ul>
+  <p>Suggested cadence: Boss chamber open <strong>Friday evening through Sunday evening</strong> each week. First clear can happen any time during the window.</p>
+
+  <h3>Boss Mechanics Philosophy</h3>
+  <p>Each boss should require genuine coordination. Not just "everyone hit it" — but assigned roles, phase transitions, mechanics that punish mistakes and reward preparation. Bosses should feel <em>dangerous</em> even to prepared groups. Death during a boss attempt carries the <strong>full death penalty</strong> — this is not a consequence-free encounter.</p>
+
+  <h3>The First Clear</h3>
+  <p>The first time a Floor Boss is defeated, several things happen:</p>
+  <ul>
+    <li>The floor above <strong>unlocks permanently</strong> — all players gain access</li>
+    <li>A <strong>Chronicle entry</strong> is created: the names of every player in the first-clear party are recorded permanently in the server's public chronicle</li>
+    <li>The player who dealt the final blow receives a <strong>unique item</strong> specific to that boss — one-of-a-kind, named, and permanently theirs</li>
+    <li>Monuments bearing the names of the first-clear party are placed in the main town of the cleared floor and the floor below</li>
+    <li>The boss respawns on its normal Challenge Window schedule — subsequent clears yield standard loot but not the unique first-clear rewards</li>
+  </ul>
+
+  <div class="callout">
+    <p><strong>Design intent:</strong> The first-clear system creates legacy. Being the player who killed Floor 10's boss is a permanent server achievement. Ten years after the server launches, that name is still on the monument. That's what makes it worth fighting for.</p>
+  </div>
+
+  <h2 id="launch">Launch Scope</h2>
+
+  <p>The full 100-floor vision will not be built before launch. That would take years and the world would launch to an empty server. The pragmatic launch scope:</p>
+
+  <h3>At Launch</h3>
+  <ul>
+    <li><strong>Floors 1–5 fully built</strong> — complete worlds with main towns, fields, labyrinths, and bosses</li>
+    <li><strong>Floors 6–10 partially built</strong> — main towns and basic terrain, with labyrinths and bosses added in the weeks following launch as players approach</li>
+    <li>A visible "map" showing all 100 floors with Floors 1–5 lit and the rest in shadow — showing players the scope of what's coming</li>
+  </ul>
+
+  <h3>Post-Launch Development</h3>
+  <ul>
+    <li>New floors release 2–4 weeks before the active clearing front is expected to reach them</li>
+    <li>Community input on floor themes as the server grows</li>
+    <li>Milestone floors (10, 20, 25, 50) are given special design attention</li>
+  </ul>
+
+  <div class="callout">
+    <p><strong>On scope discipline:</strong> The worst thing we can do is launch with 3 players and 100 empty floors. A tight, polished first 5 floors beats an ambitious incomplete 20. Quality of world before quantity of world, always.</p>
+  </div>
+
+</main>
+<footer>AINCRAD PROJECT &nbsp;|&nbsp; WORLD DESIGN &nbsp;|&nbsp; ARCHITECT: KAYABA</footer>
+</body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Combat — Aincrad</title>
+  <style>
+    :root {
+      --bg: #0a0a0f; --surface: #111118; --surface2: #161622; --border: #1e1e2e;
+      --accent: #7c6af7; --accent-dim: #4a4080; --text: #e0e0f0; --text-dim: #7070a0;
+      --text-muted: #3a3a5a; --gold: #c9a84c; --danger: #c45c5c; --safe: #5ca87c; --warn: #c4a05c;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Georgia', serif; line-height: 1.75; }
+    header { border-bottom: 1px solid var(--border); padding: 2rem; text-align: center; background: linear-gradient(180deg, #0d0d1a 0%, var(--bg) 100%); }
+    header .eyebrow { font-family: 'Courier New', monospace; font-size: 0.75rem; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.5rem; }
+    header h1 { font-size: 2.2rem; font-weight: normal; color: var(--gold); }
+    header .desc { color: var(--text-dim); font-style: italic; margin-top: 0.5rem; }
+    nav { display: flex; justify-content: center; gap: 0.5rem; padding: 1rem 2rem; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+    nav a { color: var(--text-dim); text-decoration: none; font-family: 'Courier New', monospace; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 0.8rem; border: 1px solid var(--text-muted); transition: all 0.2s; }
+    nav a:hover, nav a.active { color: var(--accent); border-color: var(--accent); }
+    main { max-width: 900px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+    h2 { font-size: 1.5rem; font-weight: normal; color: var(--gold); margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }
+    h3 { font-size: 1.1rem; font-weight: normal; color: var(--accent); margin: 2rem 0 0.75rem; }
+    h4 { font-size: 0.9rem; font-weight: bold; color: var(--text); margin: 1.25rem 0 0.5rem; font-family: 'Courier New', monospace; letter-spacing: 0.05em; text-transform: uppercase; }
+    p { margin-bottom: 1rem; color: var(--text); font-size: 0.98rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; color: var(--text); font-size: 0.95rem; }
+    strong { color: var(--gold); font-weight: normal; }
+    .callout { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+    .callout.danger { border-left-color: var(--danger); }
+    .callout.warn { border-left-color: var(--warn); }
+    .callout.safe { border-left-color: var(--safe); }
+    .callout p { margin: 0; font-size: 0.92rem; color: var(--text-dim); }
+    .callout strong { color: var(--text); }
+    .combat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .combat-card { background: var(--surface); border: 1px solid var(--border); border-top: 2px solid var(--danger); padding: 1.25rem; }
+    .combat-card h4 { margin: 0 0 0.5rem; text-transform: none; font-family: 'Georgia', serif; font-size: 1rem; color: var(--gold); letter-spacing: 0; }
+    .combat-card p { font-size: 0.88rem; color: var(--text-dim); margin: 0; }
+    .pvp-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+    .pvp-table th { text-align: left; padding: 0.6rem 0.8rem; background: var(--surface2); color: var(--text-dim); font-family: 'Courier New', monospace; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; border-bottom: 1px solid var(--border); font-weight: normal; }
+    .pvp-table td { padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .pvp-table tr:last-child td { border-bottom: none; }
+    .pvp-table td:first-child { color: var(--gold); font-family: 'Courier New', monospace; }
+    .toc { background: var(--surface); border: 1px solid var(--border); padding: 1.25rem 1.5rem; margin-bottom: 3rem; }
+    .toc h4 { margin: 0 0 0.75rem; color: var(--text-dim); }
+    .toc a { color: var(--accent); text-decoration: none; font-size: 0.9rem; }
+    .toc li { margin-bottom: 0.3rem; }
+    .section-intro { color: var(--text-dim); font-style: italic; font-size: 1rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px dashed var(--border); }
+    footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-family: 'Courier New', monospace; font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.1em; margin-top: 4rem; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Aincrad — Design Document</div>
+  <h1>Combat</h1>
+  <div class="desc">The philosophy, mechanics, and etiquette of conflict in Aincrad.</div>
+</header>
+<nav>
+  <a href="index.html">Overview</a>
+  <a href="vision.html">Vision</a>
+  <a href="world.html">World Design</a>
+  <a href="systems.html">Systems</a>
+  <a href="progression.html">Progression</a>
+  <a href="combat.html" class="active">Combat</a>
+  <a href="economy.html">Economy</a>
+  <a href="lore.html">Lore</a>
+</nav>
+<main>
+
+  <div class="toc">
+    <h4>Contents</h4>
+    <ol>
+      <li><a href="#philosophy">Combat Philosophy</a></li>
+      <li><a href="#pvp">PvP Framework</a></li>
+      <li><a href="#mods">Allowed Client Modifications</a></li>
+      <li><a href="#siege">Siege Warfare</a></li>
+      <li><a href="#pve">PvE Combat — Mobs & Bosses</a></li>
+      <li><a href="#death">Death & Consequences</a></li>
+      <li><a href="#etiquette">Conflict Etiquette & Culture</a></li>
+    </ol>
+  </div>
+
+  <h2 id="philosophy">Combat Philosophy</h2>
+  <p class="section-intro">Combat is not the point of Aincrad. It is the punctuation.</p>
+
+  <p>In SAO, Kirito didn't fight because he enjoyed killing. He fought because it was the only path forward — to clear the game, to protect people he cared about, to survive a world that gave him no alternative. Combat had weight because the stakes were real. The same principle governs Aincrad.</p>
+
+  <p>PvP in Aincrad should never feel trivial. A player who kills another player carelessly should feel the social cost of that act through the karma system. A player who kills a rival in the conclusion of a real war should feel the satisfaction of a meaningful victory. Combat is not a minigame — it is a language that players use to communicate power, to resolve disputes, to protect territory, and occasionally, to demonstrate dominance.</p>
+
+  <p>The Civ genre understood this better than any mainstream PvP game. Violence in Civcraft was costly for both parties. Gearing for PvP took real resources. Losing a fight meant losing gear. PvPers who were skilled and organized controlled the server's power landscape — but they couldn't ignore the social costs of their actions. The best fighters were also diplomatic enough to have allies, logistical enough to have gear, and politically smart enough to pick the right fights.</p>
+
+  <p>Aincrad's combat design aims for the same complexity. <strong>Skill matters. Gear matters. Organization matters. And consequences matter.</strong></p>
+
+  <h2 id="pvp">PvP Framework</h2>
+
+  <h3>The Baseline Rule</h3>
+  <p>PvP is <strong>enabled everywhere except designated safe zones</strong> (main town centers, floor transition staircases). This is not a opt-in system. Aincrad is a dangerous world, and the danger is real. Players who venture into the fields, dungeons, and wilderness do so knowing combat is possible.</p>
+
+  <div class="callout warn">
+    <p><strong>Not a gank server:</strong> PvP being enabled doesn't mean the server culture should be casual griefing. The karma system, the social costs of violence, and the community that develops naturally will police the worst behavior. The design enables conflict. The community decides the norms.</p>
+  </div>
+
+  <h3>Zones and Rules</h3>
+  <table class="pvp-table">
+    <thead>
+      <tr><th>Location</th><th>PvP Status</th><th>Death Penalty</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Main Town (core)</td>
+        <td>Disabled</td>
+        <td>N/A</td>
+        <td>Admin-enforced safe zone. Attempting to attack in town results in instant teleport + karma penalty.</td>
+      </tr>
+      <tr>
+        <td>Main Town (outskirts)</td>
+        <td>Enabled</td>
+        <td>Full</td>
+        <td>The edges of town are not protected. The smart player doesn't linger there.</td>
+      </tr>
+      <tr>
+        <td>Open Fields</td>
+        <td>Enabled</td>
+        <td>Full</td>
+        <td>Standard PvP territory. All consequences apply.</td>
+      </tr>
+      <tr>
+        <td>Labyrinth</td>
+        <td>Enabled</td>
+        <td>Full</td>
+        <td>Dungeon PvP is among the most dangerous scenarios. Know who's in there with you.</td>
+      </tr>
+      <tr>
+        <td>Boss Chamber</td>
+        <td>Enabled</td>
+        <td>Full</td>
+        <td>Player killing during a boss fight is possible and has occurred in Civ history. Betrayal is a choice players make, not something the system prevents.</td>
+      </tr>
+      <tr>
+        <td>Floor Staircase</td>
+        <td>Disabled</td>
+        <td>N/A</td>
+        <td>Transit zone only. No combat, no building.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Combat Logging</h3>
+  <p><strong>Logging out during combat is considered one of the worst things a player can do</strong> in the Civ genre, and it is here too. If a player disconnects while in active combat (within 10 seconds of being hit or hitting another player), their character remains in the world for <strong>30 seconds</strong>, visible and hittable. This prevents escape via disconnection. The community will remember who does it repeatedly.</p>
+
+  <h2 id="mods">Allowed Client Modifications</h2>
+
+  <p>Following the Civ genre's approach: mods that enhance the experience without providing unfair combat advantages are allowed. Mods that provide combat advantages are banned. The key principle is that a player using allowed mods should never be able to do something a vanilla player couldn't do — they should just be able to do it more conveniently.</p>
+
+  <h3>Allowed</h3>
+  <div class="combat-grid">
+    <div class="combat-card">
+      <h4>Minimap mods</h4>
+      <p>Xaero's Minimap (without entity radar). Navigation tools are fine. Showing player locations is not.</p>
+    </div>
+    <div class="combat-card">
+      <h4>Performance mods</h4>
+      <p>Sodium, Lithium, Optifine equivalents. The game should run well.</p>
+    </div>
+    <div class="combat-card">
+      <h4>HUD mods</h4>
+      <p>Armor status, coordinate display, ping displays. Information that doesn't affect combat decisions.</p>
+    </div>
+    <div class="combat-card">
+      <h4>Inventory management</h4>
+      <p>Auto-sort, better inventory UI. Quality of life, no combat impact.</p>
+    </div>
+    <div class="combat-card">
+      <h4>Chat mods</h4>
+      <p>Better chat formatting, timestamps, translation. Communication enhancements.</p>
+    </div>
+    <div class="combat-card">
+      <h4>Shader packs</h4>
+      <p>Visual only. The game looks better. No combat advantage.</p>
+    </div>
+  </div>
+
+  <h3>Banned</h3>
+  <ul>
+    <li><strong>Killaura / combat hacks</strong> — Auto-attacking or aim assistance</li>
+    <li><strong>Entity trackers / radars</strong> — Showing player or mob positions through walls</li>
+    <li><strong>Speed hacks / flight</strong> — Movement modifications not provided by the server</li>
+    <li><strong>X-ray texture packs</strong> — Resource location is a skill; X-ray eliminates it</li>
+    <li><strong>Reach hacks</strong> — Extended PvP range</li>
+    <li><strong>Auto-clickers</strong> — Mechanical aim automation</li>
+    <li><strong>Schematica (printer mode)</strong> — Auto-placing blocks. Manual building only.</li>
+  </ul>
+
+  <div class="callout">
+    <p><strong>Anti-cheat:</strong> Server-side anti-cheat will flag statistical anomalies (impossible reach, inhuman click rates). The community is also the best anti-cheat — players who observe cheating can report with evidence.</p>
+  </div>
+
+  <h2 id="siege">Siege Warfare</h2>
+
+  <p>The highest-stakes form of combat in Aincrad is the <strong>Guild Siege</strong> — a coordinated assault on another guild's fortified territory. Sieges are where the Civ mechanics (Iron Binding, Warding Anchors, Ward Crystals) converge with organized PvP combat.</p>
+
+  <h3>What a Siege Looks Like</h3>
+  <p>A siege isn't a single fight — it's a campaign. The attacking force must:</p>
+  <ol>
+    <li><strong>Scout</strong> — Map the target's territory, identify Ward Crystal coverage, locate Warding Anchors</li>
+    <li><strong>Break Surveillance</strong> — Use Silence Powder to disable key Ward Crystals, or simply accept that the defenders will know they're coming</li>
+    <li><strong>Breach Reinforcements</strong> — Attack the outer walls (breaking through Iron Binding reinforcement takes real time and resources)</li>
+    <li><strong>Destroy Warding Anchors</strong> — Without destroying the anchors, the attacking force can't reinforce anything they take</li>
+    <li><strong>Reach the Vault</strong> — The target's most valuable items are in a reinforced vault deep inside their fortification</li>
+    <li><strong>Extract</strong> — Get out with what you took</li>
+  </ol>
+
+  <p>The defending force, if online, will fight at every step of this. Sieges that occur while the defending guild is offline are <strong>raids</strong> — lower glory, but the same mechanical outcome. The best guilds design their fortifications to take so long to breach that defenders will log on before the raid completes.</p>
+
+  <h3>Siege Declarations</h3>
+  <p>There is no mechanical requirement to declare a siege — attacking another player's property is always mechanically possible. But <strong>formal war declarations</strong> carry social weight. A guild that wars and wins fairly is respected. A guild that raids offline enemies repeatedly while avoiding direct conflict earns a reputation the server won't forget.</p>
+
+  <h3>Siege Equipment</h3>
+  <ul>
+    <li><strong>Battering Ram</strong> — A craftable item that significantly increases block break speed against reinforced blocks. The primary siege tool.</li>
+    <li><strong>Breach Charge</strong> — Explosive. Does AoE damage to reinforced blocks. Rare and expensive. Reserved for vault doors.</li>
+    <li><strong>Siege Tower</strong> — A deployable structure that provides elevated positions for archers during an assault.</li>
+    <li><strong>Grappling Hook</strong> — Allows rapid vertical movement on walls. The assault tool for scaled fortifications.</li>
+  </ul>
+
+  <h2 id="pve">PvE Combat — Mobs & Bosses</h2>
+
+  <h3>Mob Design Philosophy</h3>
+  <p>Mobs in Aincrad should feel like <em>enemies</em>, not inconveniences. Vanilla Minecraft mobs are too passive, too predictable, and too easy for experienced players. Aincrad mobs need custom behavior:</p>
+  <ul>
+    <li><strong>Aggro ranges</strong> scale with floor — higher floors, mobs detect you from farther</li>
+    <li><strong>Mob packs</strong> — enemies that call for help when attacked, bringing nearby mobs into the fight</li>
+    <li><strong>Patrolling behavior</strong> — mobs move through defined routes rather than standing static</li>
+    <li><strong>Escalating damage</strong> — mobs become more dangerous the longer a fight goes, incentivizing fast decisive combat over drawn-out survival</li>
+    <li><strong>Special abilities</strong> — floor-specific mobs have unique mechanics: slowing attacks, poison, knockback, shield effects</li>
+  </ul>
+
+  <h3>Field Bosses</h3>
+  <p>Each floor has 2–4 named Field Bosses that roam the field zone on patrol routes. They are significantly stronger than regular mobs and require a group to defeat safely. Field Bosses respawn on a 6–12 hour timer. They drop mid-tier loot and are a reliable source of income for organized hunting parties.</p>
+  <p>Field Boss kills are <strong>public</strong> — a server notification announces who killed which boss. This creates social recognition for active hunters.</p>
+
+  <h3>Floor Boss Design</h3>
+  <p>Floor Bosses are encounters designed for <strong>full raid groups of 10–20 players</strong>. Each boss has:</p>
+  <ul>
+    <li><strong>Phase transitions</strong> — behavior changes at health thresholds (75%, 50%, 25%)</li>
+    <li><strong>Telegraphed attacks</strong> — visual warnings before devastating moves</li>
+    <li><strong>Mechanics that require coordination</strong> — specific players must handle specific roles or wipe conditions occur</li>
+    <li><strong>Enrage timer</strong> — bosses that aren't killed within the time limit become unkillable and reset; this prevents passive turtle strategies</li>
+  </ul>
+
+  <div class="callout danger">
+    <p><strong>Boss difficulty philosophy:</strong> The first attempts on a new floor boss should feel <em>impossible</em>. Players should wipe, learn, regroup, and come back better. The first clear should feel like a genuine achievement — not a guaranteed outcome of enough attempts, but a testament to coordination, preparation, and skill. If the first group to clear every boss does it on their first or second attempt, the bosses are too easy.</p>
+  </div>
+
+  <h2 id="death">Death & Consequences</h2>
+
+  <h3>The Death Screen</h3>
+  <p>When a player dies, they see a death screen with:</p>
+  <ul>
+    <li>What killed them (mob name, player name)</li>
+    <li>What items they dropped</li>
+    <li>Their current respawn point</li>
+    <li>A brief atmospheric message (in the style of SAO's system announcements)</li>
+  </ul>
+
+  <h3>Respawning</h3>
+  <p>Players respawn at their <strong>registered respawn point</strong>. New players default to Floor 1's main town. Players can register at any main town they've visited. Players with a guild hall may register there instead.</p>
+  <p>There is a <strong>5-second respawn delay</strong> — brief, but enough to feel like a pause, a breath, a moment to process what just happened.</p>
+
+  <h3>Item Drop Rules</h3>
+  <ul>
+    <li><strong>Equipped items:</strong> Never dropped</li>
+    <li><strong>Inventory items:</strong> 30% chance per item to drop (random selection)</li>
+    <li><strong>Col:</strong> 10% of carried Col is lost on death (gone, not dropped)</li>
+    <li><strong>Bound items:</strong> Items bound to a Covenant drop at lower rate (15%) — protecting guild resources from careless members</li>
+    <li><strong>Unique items:</strong> Special handling — never lost on mob death, 50% on PvP death (dropped for the killer)</li>
+  </ul>
+
+  <h2 id="etiquette">Conflict Etiquette & Culture</h2>
+
+  <p>The best Civ servers developed their own conflict cultures — unwritten codes that governed how honorable players were expected to behave. These weren't admin rules. They were community norms, enforced by reputation.</p>
+
+  <p>Aincrad will develop its own culture organically, but the design creates conditions for certain norms to emerge:</p>
+
+  <h3>The 1v1 Challenge</h3>
+  <p>Players can issue formal 1v1 duels with agreed-upon terms (death = no item loss, fight until surrender, etc.). This is a way to resolve disputes, settle bets, or just test skills without real consequences. The mechanic is supported by the server — agreed duels are tracked, outcomes are recorded, and no karma is generated regardless of outcome.</p>
+
+  <h3>Prisoner Treatment</h3>
+  <p>When a player is Soul Bound, they are in the holding party's power. The community norm that will emerge is that prisoners should be treated as bargaining chips, not torture subjects. Reasonable guilds will have stated ransom terms. Guilds that hold prisoners indefinitely with no stated terms will find their reputation suffers accordingly.</p>
+
+  <h3>The Chronicle</h3>
+  <p>Everything significant that happens is recorded in the public Chronicle. War declarations, boss clears, major raids, first achievements — all permanent. This creates accountability. Players who act dishonorably are recorded as having done so. The Chronicle is the server's history, and every player is writing it.</p>
+
+  <div class="callout safe">
+    <p><strong>What makes Aincrad different from a regular PvP server:</strong> The social weight. Killing a player here is not an anonymous act. Everyone knows your name. Your karma is visible. Your guild bears responsibility for your actions. You are a character in an ongoing story, and the story is permanent. Play accordingly.</p>
+  </div>
+
+</main>
+<footer>AINCRAD PROJECT &nbsp;|&nbsp; COMBAT &nbsp;|&nbsp; ARCHITECT: KAYABA</footer>
+</body>
+</html>

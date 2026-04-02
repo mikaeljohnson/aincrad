@@ -6,27 +6,37 @@
   <title>Vision — Aincrad</title>
   <style>
     :root {
-      --bg: #0a0a0f;
-      --surface: #111118;
-      --border: #1e1e2e;
-      --accent: #7c6af7;
-      --text: #e0e0f0;
-      --text-dim: #7070a0;
-      --text-muted: #3a3a5a;
-      --gold: #c9a84c;
+      --bg: #0a0a0f; --surface: #111118; --surface2: #161622; --border: #1e1e2e;
+      --accent: #7c6af7; --accent-dim: #4a4080; --text: #e0e0f0; --text-dim: #7070a0;
+      --text-muted: #3a3a5a; --gold: #c9a84c; --danger: #c45c5c; --safe: #5ca87c;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg); color: var(--text); font-family: 'Georgia', serif; line-height: 1.7; }
-    header { border-bottom: 1px solid var(--border); padding: 2rem; text-align: center; }
+    body { background: var(--bg); color: var(--text); font-family: 'Georgia', serif; line-height: 1.75; }
+    header { border-bottom: 1px solid var(--border); padding: 2rem; text-align: center; background: linear-gradient(180deg, #0d0d1a 0%, var(--bg) 100%); }
     header .eyebrow { font-family: 'Courier New', monospace; font-size: 0.75rem; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.5rem; }
-    header h1 { font-size: 2rem; font-weight: normal; color: var(--gold); }
+    header h1 { font-size: 2.2rem; font-weight: normal; color: var(--gold); }
+    header .desc { color: var(--text-dim); font-style: italic; margin-top: 0.5rem; }
     nav { display: flex; justify-content: center; gap: 0.5rem; padding: 1rem 2rem; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
     nav a { color: var(--text-dim); text-decoration: none; font-family: 'Courier New', monospace; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 0.8rem; border: 1px solid var(--text-muted); transition: all 0.2s; }
-    nav a:hover { color: var(--accent); border-color: var(--accent); }
-    main { max-width: 800px; margin: 0 auto; padding: 3rem 2rem; }
-    h2 { font-size: 1.3rem; font-weight: normal; color: var(--gold); margin: 2.5rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
-    p { margin-bottom: 1.1rem; color: var(--text); }
-    .placeholder { color: var(--text-muted); font-style: italic; padding: 2rem; border: 1px dashed var(--text-muted); text-align: center; margin-top: 1rem; }
+    nav a:hover, nav a.active { color: var(--accent); border-color: var(--accent); }
+    main { max-width: 860px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+    h2 { font-size: 1.5rem; font-weight: normal; color: var(--gold); margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }
+    h3 { font-size: 1.1rem; font-weight: normal; color: var(--accent); margin: 2rem 0 0.75rem; }
+    p { margin-bottom: 1.1rem; color: var(--text); font-size: 0.98rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.5rem; color: var(--text); font-size: 0.95rem; }
+    strong { color: var(--gold); font-weight: normal; }
+    .callout { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+    .callout.danger { border-left-color: var(--danger); }
+    .callout p { margin: 0; font-size: 0.92rem; color: var(--text-dim); }
+    .callout strong { color: var(--text); }
+    blockquote { border-left: 3px solid var(--accent-dim); margin: 1.5rem 0; padding: 0.75rem 1.5rem; background: var(--surface); }
+    blockquote p { color: var(--text-dim); font-style: italic; margin: 0.4rem 0; }
+    .section-intro { color: var(--text-dim); font-style: italic; font-size: 1rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px dashed var(--border); }
+    .not-list { display: flex; flex-direction: column; gap: 0.5rem; margin: 1rem 0; }
+    .not-item { display: flex; gap: 1rem; align-items: flex-start; padding: 0.75rem 1rem; background: var(--surface); border: 1px solid var(--border); }
+    .not-item .not-x { color: var(--danger); font-family: 'Courier New', monospace; font-weight: bold; flex-shrink: 0; }
+    .not-item p { margin: 0; font-size: 0.92rem; color: var(--text-dim); }
     footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-family: 'Courier New', monospace; font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.1em; margin-top: 4rem; }
   </style>
 </head>
@@ -34,10 +44,11 @@
 <header>
   <div class="eyebrow">Aincrad — Design Document</div>
   <h1>Vision Statement</h1>
+  <div class="desc">Why this world exists and what it is trying to be.</div>
 </header>
 <nav>
   <a href="index.html">Overview</a>
-  <a href="vision.html">Vision</a>
+  <a href="vision.html" class="active">Vision</a>
   <a href="world.html">World Design</a>
   <a href="systems.html">Systems</a>
   <a href="progression.html">Progression</a>
@@ -46,32 +57,82 @@
   <a href="lore.html">Lore</a>
 </nav>
 <main>
+
   <h2>The Intention</h2>
-  <p>
-    Most Minecraft servers are experiences. You log on, you consume content, you leave. The world doesn't remember you were there. Aincrad is built on a different premise: the world is real, and what you do in it matters permanently.
-  </p>
-  <p>
-    The Civ genre proved this was possible. On Civcraft, nations rose and fell over years. Betrayals were remembered. Wars reshaped geography. Players built things worth protecting — and enemies worth fearing. The mechanics enforced consequence: if you died, you lost your gear. If you were captured, you were exiled. If your vault fell, your wealth was gone. This made everything feel real in a way that most games never achieve.
-  </p>
-  <p>
-    Sword Art Online imagined something even more extreme: a world where death was final, where the only exit was the summit, where ten thousand people were forced to become a civilization under pressure. What emerged — the guilds, the politics, the heroes, the villains, the economy, the grief — was unforgettable because the stakes were total.
-  </p>
-  <p>
-    Aincrad takes the soul of both and builds something new. We cannot make death permanent — nor should we. But we can make consequence real. We can build a world with floors worth clearing, territory worth holding, wealth worth earning, and enemies worth fearing. We can build the systems that make players care.
-  </p>
-  <p>
-    The rest will write itself.
-  </p>
+  <p>Most Minecraft servers are experiences. You log on, consume content, and leave. The world doesn't remember you were there. Aincrad is built on a fundamentally different premise: <strong>the world is real, and what you do in it matters permanently.</strong></p>
+
+  <p>Two sources of inspiration converge here. The first is Sword Art Online — specifically the in-game world of Aincrad from the anime: a floating castle of 100 floors, where 10,000 players were trapped and forced to become a civilization under pressure. What emerged — guilds, politics, heroes, villains, economies, grief — was unforgettable because the stakes were total. The second is Civcraft, a Minecraft server that ran from 2012 to 2016 and produced some of the most complex emergent player civilization ever seen in a game. Nations rose and fell over years. Betrayals were remembered. Wars reshaped geography. Players built things worth protecting and enemies worth fearing.</p>
+
+  <p>Aincrad takes the soul of both and builds something new. We cannot make death permanent. But we can make consequence real. We can build a world with floors worth clearing, territory worth holding, wealth worth earning, and enemies worth fearing. We can build the systems that make players care.</p>
+
+  <p>The rest will write itself.</p>
 
   <h2>What Success Looks Like</h2>
-  <div class="placeholder">
-    This section will be filled in during the design sessions. What does Aincrad look like at its peak? What are players doing? What are they fighting for? What stories are being told?
-  </div>
+  <p class="section-intro">Not in mechanics — in moments. The moments that will only be possible if everything else is working.</p>
+
+  <p>Success is the moment a player, after their guild's vault is raided and they've lost months of work, logs back in and starts rebuilding — because they care too much about this world to quit.</p>
+
+  <p>Success is a war that lasts three months between two guilds, chronicled in server history, remembered in player stories years later.</p>
+
+  <p>Success is a new player arriving on Floor 1, joining a guild because they saw it on the notice board, and realizing six months later they've made real friends through this castle.</p>
+
+  <p>Success is the clearing party for Floor 10's boss — 20 players who wiped 15 times, rebuilt their approach, came back with better gear and better strategy, and finally heard the boss chamber seal behind them. The monument bearing their names goes up in the main town. Someone who wasn't in that party reads it and decides they want their name on the next one.</p>
+
+  <p>Success is a master smith whose name is known to every high-floor adventurer because there's simply no one better. They've never led an army. They've never pearled an enemy. Their weapon is in the hand of the player who cleared the highest boss on the server.</p>
+
+  <p>Success is a server that, five years in, has a history that players can read and feel proud to have been part of. A Chronicle full of names and events. A world that accumulated meaning because people cared about it.</p>
+
+  <h2>The Three Principles</h2>
+
+  <h3>Consequence is Sacred</h3>
+  <p>Every design decision is evaluated against one question: does this make consequences feel real? If a mechanic removes consequence — if it lets players undo the results of their choices — it is weakening the world. The death economy, Soul Binding, reinforcement decay, karma — these all exist to make sure that what happens in Aincrad <em>happened</em>. It cannot be taken back.</p>
+
+  <p>This is the hardest principle to hold. Players will complain. They will beg for rollbacks when they lose valuable items. They will argue that the consequence was unfair. Hold the line. The world's credibility depends on it.</p>
+
+  <h3>The Community Writes the Story</h3>
+  <p>The admin team's job is to build the stage and get off it. The floor designs, the boss encounters, the Chronicle — these are the stage. The players write everything that matters: the politics, the wars, the alliances, the betrayals, the legends. Admin-created narrative competes with player-created narrative and always loses. The Architect is a presence, not a protagonist.</p>
+
+  <h3>Quality Over Expansion</h3>
+  <p>Five floors that are beautifully designed, mechanically rich, and inhabited by an active community beats 20 floors that are half-finished and empty. The temptation to expand content faster than the community can fill it is constant. Resist it. Every piece of the world that exists should exist fully — with intention behind it, history developing in it, and players who care about it.</p>
 
   <h2>What We Are Not Building</h2>
-  <div class="placeholder">
-    Defining the boundaries is as important as defining the vision. What Aincrad explicitly rejects — pay-to-win, scripted story, theme park progression, admin-driven narrative — will be documented here.
+
+  <div class="not-list">
+    <div class="not-item">
+      <span class="not-x">✗</span>
+      <p><strong>A pay-to-win server.</strong> No ranks, no gear, no advantages purchasable with real money. Donations for cosmetics only, if at all. The moment real money buys power, the world's integrity collapses.</p>
+    </div>
+    <div class="not-item">
+      <span class="not-x">✗</span>
+      <p><strong>A theme park.</strong> Scripted quests, NPC-driven storylines, admin-controlled narrative arcs. Aincrad's story is written by players. The admin team builds the world, not the plot.</p>
+    </div>
+    <div class="not-item">
+      <span class="not-x">✗</span>
+      <p><strong>A grief server.</strong> The mechanics allow conflict, but the culture should punish casual predation. A player who targets newcomers endlessly without political motivation is a parasite, not a warrior. The karma system and community norms handle this.</p>
+    </div>
+    <div class="not-item">
+      <span class="not-x">✗</span>
+      <p><strong>A soft world.</strong> No admin rollbacks for legitimate in-game losses. No consequence waivers for sad stories. The hardness of the world is the point. Softening it for individuals softens it for everyone.</p>
+    </div>
+    <div class="not-item">
+      <span class="not-x">✗</span>
+      <p><strong>A server that tries to be everything.</strong> No minigames, no creative mode, no spawn kits for everyone, no flat economy that anyone can exploit. Focus. Aincrad is one specific thing. It does that thing better than anywhere else.</p>
+    </div>
+    <div class="not-item">
+      <span class="not-x">✗</span>
+      <p><strong>A finished product at launch.</strong> Floors 6–100 will be built as the server lives and grows. The world is not a product shipped once. It is a place developed continuously, shaped by what the community needs and what the story demands.</p>
+    </div>
   </div>
+
+  <h2>A Final Word</h2>
+
+  <blockquote>
+    <p>The players of the original SAO didn't choose to be there. They were trapped — forced into consequence by someone who made that choice for them.</p>
+    <p>The players of this server will choose. They will walk through the gate on Floor 1 knowing that what happens inside is real by the standards of the world they've agreed to inhabit. That choice makes their stories different from Kirito's. It makes them, in some ways, more interesting.</p>
+    <p>They chose this. They chose the consequence, the community, the ascent.</p>
+    <p>Build a world worth choosing.</p>
+  </blockquote>
+
 </main>
 <footer>AINCRAD PROJECT &nbsp;|&nbsp; VISION &nbsp;|&nbsp; ARCHITECT: KAYABA</footer>
 </body>

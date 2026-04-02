@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Economy — Aincrad</title>
+  <style>
+    :root {
+      --bg: #0a0a0f; --surface: #111118; --surface2: #161622; --border: #1e1e2e;
+      --accent: #7c6af7; --accent-dim: #4a4080; --text: #e0e0f0; --text-dim: #7070a0;
+      --text-muted: #3a3a5a; --gold: #c9a84c; --danger: #c45c5c; --safe: #5ca87c; --warn: #c4a05c;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Georgia', serif; line-height: 1.75; }
+    header { border-bottom: 1px solid var(--border); padding: 2rem; text-align: center; background: linear-gradient(180deg, #0d0d1a 0%, var(--bg) 100%); }
+    header .eyebrow { font-family: 'Courier New', monospace; font-size: 0.75rem; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.5rem; }
+    header h1 { font-size: 2.2rem; font-weight: normal; color: var(--gold); }
+    header .desc { color: var(--text-dim); font-style: italic; margin-top: 0.5rem; }
+    nav { display: flex; justify-content: center; gap: 0.5rem; padding: 1rem 2rem; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+    nav a { color: var(--text-dim); text-decoration: none; font-family: 'Courier New', monospace; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 0.8rem; border: 1px solid var(--text-muted); transition: all 0.2s; }
+    nav a:hover, nav a.active { color: var(--accent); border-color: var(--accent); }
+    main { max-width: 900px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+    h2 { font-size: 1.5rem; font-weight: normal; color: var(--gold); margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }
+    h3 { font-size: 1.1rem; font-weight: normal; color: var(--accent); margin: 2rem 0 0.75rem; }
+    h4 { font-size: 0.9rem; font-weight: bold; color: var(--text); margin: 1.25rem 0 0.5rem; font-family: 'Courier New', monospace; letter-spacing: 0.05em; text-transform: uppercase; }
+    p { margin-bottom: 1rem; color: var(--text); font-size: 0.98rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; color: var(--text); font-size: 0.95rem; }
+    strong { color: var(--gold); font-weight: normal; }
+    .callout { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+    .callout.danger { border-left-color: var(--danger); }
+    .callout.warn { border-left-color: var(--warn); }
+    .callout.safe { border-left-color: var(--safe); }
+    .callout p { margin: 0; font-size: 0.92rem; color: var(--text-dim); }
+    .callout strong { color: var(--text); }
+    .econ-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .econ-card { background: var(--surface); border: 1px solid var(--border); border-top: 2px solid var(--gold); padding: 1.25rem; }
+    .econ-card h4 { margin: 0 0 0.5rem; text-transform: none; font-family: 'Georgia', serif; font-size: 1rem; color: var(--gold); letter-spacing: 0; }
+    .econ-card p { font-size: 0.88rem; color: var(--text-dim); margin: 0; }
+    .econ-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+    .econ-table th { text-align: left; padding: 0.6rem 0.8rem; background: var(--surface2); color: var(--text-dim); font-family: 'Courier New', monospace; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; border-bottom: 1px solid var(--border); font-weight: normal; }
+    .econ-table td { padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .econ-table tr:last-child td { border-bottom: none; }
+    .econ-table td:first-child { color: var(--gold); font-family: 'Courier New', monospace; }
+    .toc { background: var(--surface); border: 1px solid var(--border); padding: 1.25rem 1.5rem; margin-bottom: 3rem; }
+    .toc h4 { margin: 0 0 0.75rem; color: var(--text-dim); }
+    .toc a { color: var(--accent); text-decoration: none; font-size: 0.9rem; }
+    .toc li { margin-bottom: 0.3rem; }
+    .section-intro { color: var(--text-dim); font-style: italic; font-size: 1rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px dashed var(--border); }
+    footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-family: 'Courier New', monospace; font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.1em; margin-top: 4rem; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Aincrad — Design Document</div>
+  <h1>Economy</h1>
+  <div class="desc">Col, trade, crafting, and the systems that make the world run.</div>
+</header>
+<nav>
+  <a href="index.html">Overview</a>
+  <a href="vision.html">Vision</a>
+  <a href="world.html">World Design</a>
+  <a href="systems.html">Systems</a>
+  <a href="progression.html">Progression</a>
+  <a href="combat.html">Combat</a>
+  <a href="economy.html" class="active">Economy</a>
+  <a href="lore.html">Lore</a>
+</nav>
+<main>
+
+  <div class="toc">
+    <h4>Contents</h4>
+    <ol>
+      <li><a href="#philosophy">Economy Philosophy</a></li>
+      <li><a href="#col">Col — The Currency</a></li>
+      <li><a href="#shops">Player Shops</a></li>
+      <li><a href="#factory">The Factory System</a></li>
+      <li><a href="#supply">Supply Chains</a></li>
+      <li><a href="#npc">NPC Economy</a></li>
+      <li><a href="#inflation">Preventing Inflation</a></li>
+      <li><a href="#roles">Economic Roles</a></li>
+    </ol>
+  </div>
+
+  <h2 id="philosophy">Economy Philosophy</h2>
+  <p class="section-intro">A good economy is the invisible hand that makes every other system more interesting.</p>
+
+  <p>SAO's economy was one of its most underappreciated features. Resources from different floors had different values. The best equipment required materials from dangerous floors, skilled craftsmen, and significant investment. Teleport Crystals were expensive. Running a shop in a floor town was a viable and respected way to play the game.</p>
+
+  <p>The Civ genre formalized this further. Civcraft's Factory system (and successors like FactoryMod) created genuine industrial supply chains. Iron ore became iron ingots became iron blocks became reinforcement became vaults. Players who controlled ore sources had real economic power. The best "factory builds" — complex crafting setups that produced output at industrial scale — were major guild assets.</p>
+
+  <p>Aincrad merges both approaches. The economy exists to:</p>
+  <ul>
+    <li>Give every player role (fighter, crafter, merchant, farmer, miner) a reason to exist</li>
+    <li>Create interdependence — no one should be able to provide for themselves completely</li>
+    <li>Drive players toward trading, cooperating, and occasionally fighting over resources</li>
+    <li>Provide a sink for accumulated wealth (gear, reinforcement, Warding Anchors, teleport crystals)</li>
+  </ul>
+
+  <div class="callout">
+    <p><strong>The anti-inflation principle:</strong> Every good economy has sinks — ways for currency and resources to leave the system. Without sinks, inflation destroys the economy. Every design decision in the Aincrad economy is evaluated against: <em>how does this remove wealth from the system?</em></p>
+  </div>
+
+  <h2 id="col">Col — The Currency</h2>
+
+  <p><strong>Col</strong> is the in-game currency of Aincrad, named directly from SAO. It exists as a physical item — a stack of Col coins — that takes up inventory space. This is intentional: currency that has weight matters more than a number on a screen.</p>
+
+  <h3>Sources of Col</h3>
+  <ul>
+    <li><strong>Mob kills</strong> — Every mob drops a small amount of Col. Standard mobs: 1–10 Col. Field Bosses: 100–500 Col. Floor Bosses: 2,000–10,000 Col (split among the raid group).</li>
+    <li><strong>Selling to NPC shops</strong> — Every main town has NPC merchants who buy certain items at fixed rates. These rates are low — designed to be a floor price, not the target price.</li>
+    <li><strong>Player trade</strong> — The primary source of significant Col income. Skilled crafters and merchants make far more through player commerce than mob grinding.</li>
+    <li><strong>Quest rewards</strong> — Certain repeatable tasks posted on the Floor Notice Boards pay Col rewards.</li>
+  </ul>
+
+  <h3>Col Sinks</h3>
+  <ul>
+    <li>Reinforcement material costs (iron, diamond)</li>
+    <li>Warding Anchor activation and upkeep</li>
+    <li>Covenant registration and maintenance fees</li>
+    <li>Teleport Crystal crafting materials</li>
+    <li>NPC shop purchases (maps, consumables, basic gear)</li>
+    <li>Death penalty Col loss (10% of carried Col)</li>
+    <li>Skill reset costs</li>
+    <li>Bounty postings</li>
+  </ul>
+
+  <h3>Anti-Hoarding Design</h3>
+  <p>Col stored in a player's inventory is at risk — it can be dropped on death. Col stored in a secured vault (reinforced chest in a Warding Anchor territory) is safe but illiquid. This creates a meaningful decision: liquid wealth is at risk, secured wealth can't be spent quickly. Large holders of Col have to make this tradeoff constantly.</p>
+
+  <h2 id="shops">Player Shops</h2>
+
+  <p>The primary marketplace of Aincrad is <strong>player-run shops</strong>. NPC shops exist but offer limited stock at uncompetitive prices. The real economy flows through player commerce.</p>
+
+  <h3>Shop Chests</h3>
+  <p>Any player can set up a shop chest in a safe zone or on their own territory. A shop chest is a reinforced chest with a sign that lists the item, the quantity, and the price. Players interact with the chest to buy — Col is automatically transferred, items are automatically taken. No manual trading required.</p>
+
+  <h3>Main Town Markets</h3>
+  <p>Each floor's main town has a designated <strong>Market District</strong> — a section of the town with pre-built shop stalls that players can rent for weekly fees. This creates:</p>
+  <ul>
+    <li>A natural gathering point for commerce</li>
+    <li>Competition between merchants (adjacent stalls, price visibility)</li>
+    <li>An NPC revenue stream that contributes to floor maintenance costs</li>
+  </ul>
+  <p>Market stall rents are paid in Col to the town's Covenant account. The guild that runs the main town (or the admin team) receives this revenue. On early floors, the admin team manages this; on later floors, player governments may emerge to claim governance of floor economies.</p>
+
+  <h3>Player Cities</h3>
+  <p>Nothing prevents players from building <strong>their own commercial cities</strong> — player-built towns with their own market districts, inn services, and infrastructure. The Civ genre's history is full of player cities that outcompeted the default spawn areas because of better location, better services, or better marketing. Aincrad should produce the same.</p>
+
+  <h2 id="factory">The Factory System</h2>
+
+  <p>The Factory system is Aincrad's industrial backbone — a Civ-genre-inspired crafting system where bulk processing happens at scale, not through individual workbenches.</p>
+
+  <h3>What Factories Do</h3>
+  <p>Factories are player-built structures (a specific multiblock arrangement) that process raw materials into refined outputs at a cost of <strong>XP levels</strong>. This ties resource processing to character progression — factories require experienced operators, or a stockpile of XP bottles.</p>
+
+  <p>Example factory chains:</p>
+
+  <table class="econ-table">
+    <thead>
+      <tr><th>Input</th><th>Factory Type</th><th>Output</th><th>XP Cost</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>16 Iron Ore</td>
+        <td>Smelter</td>
+        <td>32 Iron Ingots</td>
+        <td>1 level</td>
+      </tr>
+      <tr>
+        <td>8 Iron Ingots</td>
+        <td>Forge</td>
+        <td>1 Iron Block (reinforcement)</td>
+        <td>2 levels</td>
+      </tr>
+      <tr>
+        <td>4 Diamond + 8 Iron</td>
+        <td>High Forge</td>
+        <td>1 Diamond-tier Weapon Blank</td>
+        <td>5 levels</td>
+      </tr>
+      <tr>
+        <td>32 Wheat + 8 Sugar</td>
+        <td>Kitchen</td>
+        <td>16 Combat Rations (+hunger)</td>
+        <td>1 level</td>
+      </tr>
+      <tr>
+        <td>Various Herbs</td>
+        <td>Alchemical Still</td>
+        <td>Potion base compounds</td>
+        <td>2 levels</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Factory Complexity</h3>
+  <p>Basic factories are accessible to anyone. Advanced factories require specific resources, higher skill levels to operate, and more complex multiblock structures. The most powerful production facilities — those that produce Rare and Unique tier items — require guild-level investment and sustained operation.</p>
+
+  <h3>Factory Ownership</h3>
+  <p>Factories are built in the physical world and can be stolen, raided, or destroyed like any other structure. A guild that builds a powerful production complex must defend it. The factory is both an economic asset and a military target.</p>
+
+  <h2 id="supply">Supply Chains</h2>
+
+  <p>The economic depth of Aincrad emerges from <strong>floor-specific resources</strong>. Not every material is available on every floor. The best smithing materials require resources from Floors 4–8. The rarest alchemical herbs grow only in specific biomes. No single guild controls all supply chains at once.</p>
+
+  <h3>Key Resource Geography</h3>
+  <div class="econ-grid">
+    <div class="econ-card">
+      <h4>Volcanic Iron (Floor 4)</h4>
+      <p>Required for high-tier weapons. Only found in Ashveil's volcanic formations. Whoever controls Floor 4 access controls a critical upstream resource.</p>
+    </div>
+    <div class="econ-card">
+      <h4>Crystal Quartz (Floor 6)</h4>
+      <p>Essential for Ward Crystal and Warding Anchor crafting. Every guild needs surveillance infrastructure. Quartz is a choke point.</p>
+    </div>
+    <div class="econ-card">
+      <h4>Bioluminescent Fungi (Floor 8)</h4>
+      <p>Key alchemical ingredient for the best healing potions. Medical supply chains run through Floor 8.</p>
+    </div>
+    <div class="econ-card">
+      <h4>Gilded Ore (Floor 9)</h4>
+      <p>The primary input for high-tier armor plating. Desert floor makes harvesting dangerous — premium pricing reflects the risk.</p>
+    </div>
+    <div class="econ-card">
+      <h4>Void Steel (Boss drops)</h4>
+      <p>The rarest material in the game. Only from Floor Bosses. Extreme scarcity = extreme value. The supply of Void Steel items is permanently limited.</p>
+    </div>
+    <div class="econ-card">
+      <h4>Sea Harvest (Floor 7 & 15)</h4>
+      <p>Exclusive cooking ingredients. The best combat food buffs require aquatic resources. Naval floors have genuine economic leverage.</p>
+    </div>
+  </div>
+
+  <h2 id="npc">NPC Economy</h2>
+
+  <p>NPC merchants provide a stable floor for certain goods. They sell basic equipment, consumables, and crafting materials at fixed prices. These prices are deliberately <strong>uncompetitive</strong> — a player with a good operation will always undercut the NPC on price and quality. But NPCs provide the safety net that prevents total market collapse when player supply is disrupted.</p>
+
+  <h3>Floor-Specific NPC Stock</h3>
+  <p>NPCs on different floors carry different specialties. Floor 6 NPCs carry Crystal-adjacent goods at slight premiums. Floor 4 NPCs carry fire-resistance consumables. This creates NPC arbitrage opportunities — players who know the NPC stock landscape can profit from price differentials across floors.</p>
+
+  <h2 id="inflation">Preventing Inflation</h2>
+
+  <p>Inflation is the silent killer of game economies. As players accumulate Col faster than sinks remove it, prices rise until the currency becomes meaningless. The design targets for Aincrad:</p>
+
+  <h3>Controlled Money Supply</h3>
+  <ul>
+    <li>Mob Col drops are low — grinding mobs is not a get-rich strategy</li>
+    <li>The primary Col sources scale with floor difficulty and boss engagement, not endless flat farming</li>
+    <li>Col loss on death creates a natural pressure on hoarding behavior</li>
+  </ul>
+
+  <h3>XP as Secondary Currency</h3>
+  <p>Factory operations, skill resets, and certain crafting recipes cost <strong>XP levels</strong> rather than Col. This creates a parallel economy that Col cannot directly substitute. A wealthy player with no XP cannot operate advanced factories. This distributes economic power more broadly than pure Col accumulation would allow.</p>
+
+  <h3>Progressive Costs</h3>
+  <p>As players advance to higher floors, their costs scale proportionally. Warding Anchors on Floor 15 cost significantly more than on Floor 1. High-tier reinforcement is a continuous drain. The server never reaches a point where established players have "enough" of everything — there is always something worth spending on.</p>
+
+  <h2 id="roles">Economic Roles</h2>
+
+  <p>The economy is designed to support distinct player archetypes who can specialize and thrive without being combat-focused:</p>
+
+  <div class="econ-grid">
+    <div class="econ-card">
+      <h4>The Industrialist</h4>
+      <p>Runs factories, controls production chains. Wealth comes from scale. Often the economic backbone of a large guild.</p>
+    </div>
+    <div class="econ-card">
+      <h4>The Merchant</h4>
+      <p>Buys, sells, and arbitrages. Knows the price of everything on every floor. Profits from information asymmetry and logistics.</p>
+    </div>
+    <div class="econ-card">
+      <h4>The Master Smith</h4>
+      <p>Produces the best gear on the server. Name is known. Waiting list is real. Commands premium prices.</p>
+    </div>
+    <div class="econ-card">
+      <h4>The Harvester</h4>
+      <p>Controls resource nodes. Sells raw materials to crafters. The unglamorous foundation everything else rests on.</p>
+    </div>
+    <div class="econ-card">
+      <h4>The Alchemist</h4>
+      <p>Produces the consumables that keep fighters alive. A good alchemist attached to a raiding guild is invaluable.</p>
+    </div>
+    <div class="econ-card">
+      <h4>The Banker</h4>
+      <p>Manages Covenant treasuries, finances operations, offers loans. Economic power without ever drawing a sword.</p>
+    </div>
+  </div>
+
+  <div class="callout safe">
+    <p><strong>Economic prestige:</strong> The server's best merchants and craftsmen should be as famous and respected as its best fighters. Economic mastery is a legitimate path to server influence. The player who supplies the dominant guild's gear supply chain has as much power as the general who leads its armies.</p>
+  </div>
+
+</main>
+<footer>AINCRAD PROJECT &nbsp;|&nbsp; ECONOMY &nbsp;|&nbsp; ARCHITECT: KAYABA</footer>
+</body>
+</html>
